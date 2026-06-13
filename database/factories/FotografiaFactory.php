@@ -21,7 +21,7 @@ class FotografiaFactory extends Factory
         return [
             'bovino_id' => Bovino::factory(),
             'capturada_por' => Usuario::factory(),
-            'ruta_archivo' => 'fotografias/' . now()->format('Y/m') . '/' . fake()->uuid() . '.jpg',
+            'ruta_archivo' => 'fotografias/'.now()->format('Y/m').'/'.fake()->uuid().'.jpg',
             'estado_procesamiento' => fake()->randomElement(['pendiente', 'completado', 'fallido']),
             'capturada_el' => now(),
             'sincronizada_el' => fake()->optional()->dateTime(),

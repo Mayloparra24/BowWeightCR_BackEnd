@@ -19,7 +19,7 @@ class FincaFactory extends Factory
     {
         return [
             'propietario_id' => Usuario::factory(),
-            'nombre_finca' => fake()->company() . ' - Finca',
+            'nombre_finca' => fake()->company().' - Finca',
             'ubicacion' => fake()->streetAddress(),
             'canton' => fake()->randomElement(['Liberia', 'Bagaces', 'Cañas', 'Santa Cruz', 'Nicoya']),
             'provincia' => 'Guanacaste',

@@ -10,9 +10,11 @@ use Illuminate\Support\Str;
 
 class ImageStorageService
 {
-    public function __construct(
-        private readonly string $disk = 'r2'
-    ) {
+    private readonly string $disk;
+
+    public function __construct(?string $disk = null)
+    {
+        $this->disk = $disk ?? config('filesystems.default', 'local');
     }
 
     /**
