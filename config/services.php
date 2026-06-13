@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'ml_service' => [
+        'base_url' => env('ML_SERVICE_BASE_URL', 'https://unranked-mystified-thesaurus.ngrok-free.dev'),
+        'endpoint' => env('ML_SERVICE_ENDPOINT', '/api/v1/predict-weight'),
+        'timeout' => env('ML_SERVICE_TIMEOUT', 15),
+        'headers' => [
+            'ngrok-skip-browser-warning' => 'true',
+        ],
+    ],
+
 ];
