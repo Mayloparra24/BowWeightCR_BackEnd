@@ -48,4 +48,9 @@ class Finca extends Model
     {
         return $this->hasMany(Recordatorio::class);
     }
+
+    public function asignaciones(): HasMany
+    {
+    return $this->hasMany(AsignacionVeterinario::class);    
+    }
 }

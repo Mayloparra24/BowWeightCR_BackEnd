@@ -1,7 +1,5 @@
 <?php
-
 declare(strict_types=1);
-
 namespace Database\Seeders;
 
 use App\Models\Usuario;
@@ -16,12 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RazaSeeder::class,
-        ]);
-
-        Usuario::factory()->create([
-            'nombre_completo' => 'Usuario de Prueba',
-            'correo_electronico' => 'test@example.com',
-            'rol' => 'ganadero',
+            UsuarioSeeder::class,
+            FincaSeeder::class,
+            BovinoSeeder::class,
         ]);
     }
 }

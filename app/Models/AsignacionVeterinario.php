@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AsignacionVeterinario extends Model
 {
+
     use HasFactory;
+    protected $table = 'asignaciones_veterinarios';
 
     protected $fillable = [
         'veterinario_id',
