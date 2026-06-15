@@ -1,8 +1,49 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AsignacionVeterinarioController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BitacoraController;
+use App\Http\Controllers\BovinoController;
+use App\Http\Controllers\FincaController;
+use App\Http\Controllers\PesajeController;
+use App\Http\Controllers\RazaController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\WeightEstimationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Rutas públicas
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
+
+// Rutas protegidas con Sanctum
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
+
+    // Fincas
+    Route::apiResource('fincas', FincaController::class);
+
+    // Bovinos
+    Route::apiResource('bovinos', BovinoController::class);
+    Route::patch('bovinos/{bovino}/inactivar', [BovinoController::class, 'marcarInactivo']);
+    Route::patch('bovinos/{bovino}/activar', [BovinoController::class, 'marcarActivo']);
+
+    // Pesajes
+    Route::get('bovinos/{bovino}/pesajes', [PesajeController::class, 'index']);
+    Route::post('/pesajes', [PesajeController::class, 'store']);
+    Route::put('/pesajes/{pesaje}/corregir', [PesajeController::class, 'correct']);
+    Route::post('/pesajes/estimar', [WeightEstimationController::class, 'estimate'])->middleware('throttle:estimacion-ia');
+
+    // Asignaciones de veterinarios
+    Route::get('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'index']);
+    Route::post('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'store']);
+    Route::delete('fincas/{finca}/veterinarios/{asignacion}', [AsignacionVeterinarioController::class, 'destroy']);
+
+    // Razas
+    Route::get('razas', [RazaController::class, 'index']);
+
+    // Usuarios (solo administradores)
+    Route::apiResource('usuarios', UsuarioController::class);
+
+    // Bitácora de auditoría (solo administradores)
+    Route::get('bitacora', [BitacoraController::class, 'index']);
+});
