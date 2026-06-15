@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -15,11 +14,6 @@ use Illuminate\Support\Str;
 class UsuarioFactory extends Factory
 {
     protected $model = Usuario::class;
-
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
 
     /**
      * Define the model's default state.
@@ -32,7 +26,7 @@ class UsuarioFactory extends Factory
             'nombre_completo' => fake()->name(),
             'correo_electronico' => fake()->unique()->safeEmail(),
             'correo_verificado_en' => now(),
-            'contrasena_hash' => static::$password ??= Hash::make('password'),
+            'contrasena_hash' => 'password',
             'rol' => 'ganadero',
             'esta_activo' => true,
             'remember_token' => Str::random(10),

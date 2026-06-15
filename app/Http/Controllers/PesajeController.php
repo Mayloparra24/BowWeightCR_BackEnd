@@ -6,8 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CorrectPesajeRequest;
 use App\Http\Requests\StorePesajeRequest;
+use App\Http\Resources\PesajeResource;
 use App\Models\Bovino;
 use App\Models\RegistroPesaje;
+use App\Support\ApiResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,20 +20,29 @@ class PesajeController extends Controller
     {
         $bovino = Bovino::findOrFail($bovinoId);
 
+        $this->authorize('viewAny', [RegistroPesaje::class, $bovino]);
+
         $pesajes = $bovino->pesajes()
             ->with(['fotografia', 'creadoPor'])
             ->orderByDesc('registrado_el')
             ->paginate($request->input('per_page', 15));
 
-        return response()->json($pesajes);
+        return ApiResponse::paginated(
+            paginator: $pesajes,
+            message: 'Pesajes obtenidos correctamente.',
+        );
     }
 
     public function store(StorePesajeRequest $request): JsonResponse
     {
+        $bovino = Bovino::findOrFail($request->validated('bovino_id'));
+
+        $this->authorize('create', [RegistroPesaje::class, $bovino]);
+
         $pesaje = RegistroPesaje::create([
-            'bovino_id' => $request->validated('bovino_id'),
+            'bovino_id' => $bovino->id,
             'fotografia_id' => null,
-            'creado_por' => $request->user()?->id ?? 1,
+            'creado_por' => $request->user()->id,
             'peso_estimado' => null,
             'peso_registrado' => $request->validated('peso_registrado'),
             'es_correccion_manual' => false,
@@ -40,15 +52,18 @@ class PesajeController extends Controller
             'registrado_el' => now(),
         ]);
 
-        return response()->json([
-            'mensaje' => 'Pesaje manual registrado correctamente.',
-            'data' => $pesaje->load('bovino'),
-        ], 201);
+        return ApiResponse::resource(
+            resource: new PesajeResource($pesaje->load('bovino')),
+            message: 'Pesaje manual registrado correctamente.',
+            status: 201,
+        );
     }
 
     public function correct(CorrectPesajeRequest $request, int $id): JsonResponse
     {
-        $pesaje = RegistroPesaje::findOrFail($id);
+        $pesaje = RegistroPesaje::with('bovino')->findOrFail($id);
+
+        $this->authorize('update', $pesaje);
 
         $pesaje->update([
             'peso_registrado' => $request->validated('peso_registrado'),
@@ -56,9 +71,9 @@ class PesajeController extends Controller
             'es_correccion_manual' => true,
         ]);
 
-        return response()->json([
-            'mensaje' => 'Pesaje corregido correctamente.',
-            'data' => $pesaje->fresh(),
-        ]);
+        return ApiResponse::resource(
+            resource: new PesajeResource($pesaje->fresh()),
+            message: 'Pesaje corregido correctamente.',
+        );
     }
 }

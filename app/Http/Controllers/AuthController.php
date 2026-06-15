@@ -2,7 +2,9 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\Usuario;
+use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,42 +21,44 @@ class AuthController extends Controller
         $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();
 
         if (! $usuario || ! Hash::check($request->contrasena, $usuario->contrasena_hash)) {
-            return response()->json([
-                'mensaje' => 'Credenciales incorrectas.',
-            ], 401);
+            return ApiResponse::error(
+                message: 'Credenciales incorrectas.',
+                status: 401,
+            );
         }
 
         if (! $usuario->esta_activo) {
-            return response()->json([
-                'mensaje' => 'Tu cuenta está desactivada. Contactá al administrador.',
-            ], 403);
+            return ApiResponse::error(
+                message: 'Tu cuenta está desactivada. Contactá al administrador.',
+                status: 403,
+            );
         }
 
         $token = $usuario->createToken('api-token')->plainTextToken;
 
-        return response()->json([
-            'mensaje' => 'Sesión iniciada correctamente.',
-            'token' => $token,
-            'usuario' => [
-                'id' => $usuario->id,
-                'nombre' => $usuario->nombre_completo,
-                'correo' => $usuario->correo_electronico,
-                'rol' => $usuario->rol,
+        return ApiResponse::success(
+            data: [
+                'token' => $token,
+                'usuario' => new UserResource($usuario),
             ],
-        ]);
+            message: 'Sesión iniciada correctamente.',
+        );
     }
 
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'mensaje' => 'Sesión cerrada correctamente.',
-        ]);
+        return ApiResponse::success(
+            message: 'Sesión cerrada correctamente.',
+        );
     }
 
     public function me(Request $request): JsonResponse
     {
-        return response()->json($request->user());
+        return ApiResponse::resource(
+            resource: new UserResource($request->user()),
+            message: 'Usuario autenticado obtenido correctamente.',
+        );
     }
 }

@@ -2,7 +2,9 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FincaResource;
 use App\Models\Finca;
+use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -25,7 +27,10 @@ class FincaController extends Controller
                 ->get();
         }
 
-        return response()->json($fincas);
+        return ApiResponse::resource(
+            resource: FincaResource::collection($fincas),
+            message: 'Fincas obtenidas correctamente.',
+        );
     }
 
     public function store(Request $request): JsonResponse
@@ -34,9 +39,9 @@ class FincaController extends Controller
 
         $data = $request->validate([
             'nombre_finca' => ['required', 'string', 'max:255'],
-            'ubicacion'    => ['nullable', 'string', 'max:255'],
-            'canton'       => ['nullable', 'string', 'max:100'],
-            'provincia'    => ['nullable', 'string', 'max:100'],
+            'ubicacion' => ['nullable', 'string', 'max:255'],
+            'canton' => ['nullable', 'string', 'max:100'],
+            'provincia' => ['nullable', 'string', 'max:100'],
         ]);
 
         $finca = Finca::create([
@@ -44,17 +49,21 @@ class FincaController extends Controller
             'propietario_id' => $request->user()->id,
         ]);
 
-        return response()->json([
-            'mensaje' => 'Finca registrada correctamente.',
-            'data'    => $finca,
-        ], 201);
+        return ApiResponse::resource(
+            resource: new FincaResource($finca->load('propietario')),
+            message: 'Finca registrada correctamente.',
+            status: 201,
+        );
     }
 
     public function show(Request $request, Finca $finca): JsonResponse
     {
         $this->authorize('view', $finca);
 
-        return response()->json($finca->load(['propietario', 'bovinos']));
+        return ApiResponse::resource(
+            resource: new FincaResource($finca->load(['propietario', 'bovinos'])),
+            message: 'Finca obtenida correctamente.',
+        );
     }
 
     public function update(Request $request, Finca $finca): JsonResponse
@@ -63,18 +72,18 @@ class FincaController extends Controller
 
         $data = $request->validate([
             'nombre_finca' => ['sometimes', 'string', 'max:255'],
-            'ubicacion'    => ['nullable', 'string', 'max:255'],
-            'canton'       => ['nullable', 'string', 'max:100'],
-            'provincia'    => ['nullable', 'string', 'max:100'],
-            'esta_activa'  => ['sometimes', 'boolean'],
+            'ubicacion' => ['nullable', 'string', 'max:255'],
+            'canton' => ['nullable', 'string', 'max:100'],
+            'provincia' => ['nullable', 'string', 'max:100'],
+            'esta_activa' => ['sometimes', 'boolean'],
         ]);
 
         $finca->update($data);
 
-        return response()->json([
-            'mensaje' => 'Finca actualizada correctamente.',
-            'data'    => $finca->fresh(),
-        ]);
+        return ApiResponse::resource(
+            resource: new FincaResource($finca->fresh()->load('propietario')),
+            message: 'Finca actualizada correctamente.',
+        );
     }
 
     public function destroy(Request $request, Finca $finca): JsonResponse
@@ -83,8 +92,8 @@ class FincaController extends Controller
 
         $finca->delete();
 
-        return response()->json([
-            'mensaje' => 'Finca eliminada correctamente.',
-        ]);
+        return ApiResponse::success(
+            message: 'Finca eliminada correctamente.',
+        );
     }
 }

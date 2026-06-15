@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DTOs\WeightEstimationRequest;
+use App\DTOs\WeightEstimationRequest as WeightEstimationDto;
 use App\Exceptions\WeightEstimationException;
 use App\Http\Requests\EstimateWeightRequest;
+use App\Http\Resources\PesajeResource;
 use App\Models\Bovino;
 use App\Models\Fotografia;
+use App\Models\Raza;
 use App\Models\RegistroPesaje;
 use App\Services\ImageStorageService;
 use App\Services\WeightEstimationOrchestrator;
+use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 class WeightEstimationController extends Controller
@@ -20,9 +23,13 @@ class WeightEstimationController extends Controller
     {
         $bovino = Bovino::findOrFail($request->validated('bovino_id'));
 
-        $dto = new WeightEstimationRequest(
+        $this->authorize('create', [\App\Models\RegistroPesaje::class, $bovino]);
+
+        $raza = Raza::findOrFail($request->validated('raza_id'));
+
+        $dto = new WeightEstimationDto(
             image: $request->file('foto'),
-            breedConstant: (float) $request->validated('constante_raza'),
+            breedConstant: (float) $raza->constante_peso,
         );
 
         $orchestrator = new WeightEstimationOrchestrator(new ImageStorageService);
@@ -31,39 +38,32 @@ class WeightEstimationController extends Controller
             $resultado = $orchestrator->estimate(
                 bovino: $bovino,
                 request: $dto,
-                capturedBy: $request->user()?->id ?? 1,
+                capturedBy: $request->user()->id,
                 forceOffline: (bool) $request->validated('modo_offline', false),
             );
         } catch (WeightEstimationException $e) {
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'code' => $e->getErrorCode(),
-                    'message' => $e->getMessage(),
-                ],
-            ], $e->getCode() ?: 422);
+            return ApiResponse::error(
+                message: $e->getMessage(),
+                status: $e->getCode() ?: 422,
+                code: $e->getErrorCode(),
+            );
         }
 
         if ($resultado instanceof Fotografia) {
-            return response()->json([
-                'success' => true,
-                'mensaje' => 'Fotografía recibida. Se procesará cuando haya conexión.',
-                'data' => [
+            return ApiResponse::success(
+                data: [
                     'fotografia_id' => $resultado->id,
                     'estado' => $resultado->estado_procesamiento,
                 ],
-            ], 202);
+                message: 'Fotografía recibida. Se procesará cuando haya conexión.',
+                status: 202,
+            );
         }
 
         /** @var RegistroPesaje $resultado */
-        return response()->json([
-            'success' => true,
-            'mensaje' => 'Peso estimado correctamente.',
-            'data' => [
-                'pesaje_id' => $resultado->id,
-                'peso_estimado_kg' => $resultado->peso_estimado,
-                'confianza_yolo' => $resultado->confianza_ia,
-            ],
-        ]);
+        return ApiResponse::resource(
+            resource: new PesajeResource($resultado->load('bovino')),
+            message: 'Peso estimado correctamente.',
+        );
     }
 }

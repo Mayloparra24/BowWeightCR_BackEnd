@@ -10,6 +10,7 @@ use App\Models\Raza;
 use App\Models\RegistroPesaje;
 use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -21,6 +22,8 @@ class PesajeControllerTest extends TestCase
     public function it_lists_weight_history_for_a_bovine(): void
     {
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
         $raza = Raza::factory()->create();
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
@@ -40,6 +43,8 @@ class PesajeControllerTest extends TestCase
     public function it_stores_a_manual_weight_record(): void
     {
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
         $raza = Raza::factory()->create();
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
@@ -51,7 +56,7 @@ class PesajeControllerTest extends TestCase
         ]);
 
         $response->assertCreated()
-            ->assertJsonPath('data.peso_registrado', '420.50')
+            ->assertJsonPath('data.peso_registrado', 420.5)
             ->assertJsonPath('data.tipo_pesaje', 'manual');
 
         $this->assertDatabaseHas('registros_pesaje', [
@@ -65,6 +70,8 @@ class PesajeControllerTest extends TestCase
     public function it_corrects_an_existing_weight_record(): void
     {
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
         $raza = Raza::factory()->create();
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
@@ -83,7 +90,7 @@ class PesajeControllerTest extends TestCase
         ]);
 
         $response->assertOk()
-            ->assertJsonPath('data.peso_registrado', '410.00')
+            ->assertJsonPath('data.peso_registrado', 410)
             ->assertJsonPath('data.es_correccion_manual', true);
 
         $this->assertDatabaseHas('registros_pesaje', [

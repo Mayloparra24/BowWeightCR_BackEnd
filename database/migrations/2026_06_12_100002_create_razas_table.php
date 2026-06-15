@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('razas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_raza')->unique();
-            $table->enum('enfoque', ['carne', 'doble_proposito', 'leche']);
+            $table->enum('enfoque', ['Carne', 'Doble Propósito', 'Leche']);
             $table->decimal('constante_peso', 8, 2);
             $table->text('descripcion')->nullable();
             $table->timestamps();
