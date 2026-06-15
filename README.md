@@ -1,58 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Guía para Persona A - BovWeight Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Estado actual
 
-## About Laravel
+La Persona B (Pesajes + IA + Colas + Almacenamiento R2) ya terminó su dominio. Este README resume lo que debés hacer vos para completar el backend.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tareas pendientes
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Autenticación con Sanctum
+- Implementar registro de usuarios (`POST /api/register`).
+- Implementar login (`POST /api/login`).
+- Implementar logout (`POST /api/logout`).
+- Asignar roles: `ganadero`, `veterinario`, `administrador`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. CRUD de Fincas
+- `GET /api/fincas`
+- `POST /api/fincas`
+- `PUT /api/fincas/{id}`
+- `DELETE /api/fincas/{id}`
 
-## Learning Laravel
+### 3. CRUD de Bovinos
+- `GET /api/bovinos`
+- `POST /api/bovinos`
+- `GET /api/bovinos/{id}`
+- `PUT /api/bovinos/{id}`
+- `DELETE /api/bovinos/{id}` (marcar como inactivo en vez de eliminar)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. Asignación de Veterinarios
+- `POST /api/fincas/{finca}/veterinarios/{veterinario}`
+- `GET /api/veterinarios/fincas`
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. Proteger endpoints existentes
+Agregar middleware `auth:sanctum` a las rutas en `routes/api.php`:
+- `/api/pesajes/*`
+- `/api/bovinos/{bovino}/pesajes`
+- `/api/pesajes/estimar`
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Modelos ya creados
 
-## Agentic Development
+| Modelo | Tabla |
+|---|---|
+| `Usuario` | `usuarios` |
+| `Finca` | `fincas` |
+| `Bovino` | `bovinos` |
+| `Raza` | `razas` |
+| `AsignacionVeterinario` | `asignaciones_veterinarios` |
+| `Fotografia` | `fotografias` |
+| `RegistroPesaje` | `registros_pesaje` |
+| `Recordatorio` | `recordatorios` |
+| `BitacoraActividad` | `bitacora_actividades` |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Variables de entorno necesarias
 
-```bash
-composer require laravel/boost --dev
+Ver `.env.example`. Las más importantes para producción:
 
-php artisan boost:install
+```env
+DB_CONNECTION=mysql
+DB_HOST=
+DB_PORT=3306
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+
+FILESYSTEM_DISK=r2
+R2_ACCESS_KEY_ID=
+R2_SECRET_ACCESS_KEY=
+R2_REGION=auto
+R2_BUCKET=
+R2_ENDPOINT=
+R2_URL=
+R2_USE_PATH_STYLE_ENDPOINT=true
+
+ML_SERVICE_BASE_URL=https://unranked-mystified-thesaurus.ngrok-free.dev
+ML_SERVICE_ENDPOINT=/api/v1/predict-weight
+ML_SERVICE_TIMEOUT=15
+
+QUEUE_CONNECTION=database
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Cómo probar localmente
 
-## Contributing
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Notas importantes
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Los modelos `Finca` y `Bovino` ya tienen sus relaciones definidas.
+- El modelo `Bovino` tiene métodos helper `estaActivo()`, `marcarInactivo(motivo)`, `marcarActivo()`.
+- Los endpoints de Persona B están funcionando sin autenticación por ahora, listos para que les agregues el middleware.
+- Las credenciales reales de la base de datos y R2 se pasan por aparte (no van en Git).
