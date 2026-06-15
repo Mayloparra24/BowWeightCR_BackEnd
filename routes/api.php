@@ -12,7 +12,7 @@ use App\Http\Controllers\WeightEstimationController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
+Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('throttle:login');
 
 // Rutas protegidas con Sanctum
 Route::middleware('auth:sanctum')->group(function () {
