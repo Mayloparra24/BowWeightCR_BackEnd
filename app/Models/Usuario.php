@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 
 #[Fillable([
     'nombre_completo',
@@ -23,9 +25,10 @@ use Illuminate\Notifications\Notifiable;
 class Usuario extends Authenticatable
 {
     /** @use HasFactory<UsuarioFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable;
 
     protected $table = 'usuarios';
+
 
     protected function casts(): array
     {
@@ -36,6 +39,15 @@ class Usuario extends Authenticatable
         ];
     }
 
+    public function getAuthPassword(): string
+{
+    return $this->contrasena_hash;
+}
+
+public function getAuthIdentifierName(): string
+{
+    return 'correo_electronico';
+}
     public function fincas(): HasMany
     {
         return $this->hasMany(Finca::class, 'propietario_id');
