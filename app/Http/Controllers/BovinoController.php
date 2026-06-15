@@ -2,8 +2,10 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BovinoResource;
 use App\Models\Bovino;
 use App\Models\Finca;
+use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -26,50 +28,47 @@ class BovinoController extends Controller
             })->with(['finca', 'raza'])->get();
         }
 
-        return response()->json($bovinos);
+        return ApiResponse::resource(
+            resource: BovinoResource::collection($bovinos),
+            message: 'Bovinos obtenidos correctamente.',
+        );
     }
 
     public function store(Request $request): JsonResponse
-{
-    $usuario = $request->user();
+    {
+        $this->authorize('create', Bovino::class);
 
-    if (! $usuario->esGanadero()) {
-        return response()->json([
-            'mensaje' => 'Solo los ganaderos pueden registrar bovinos.',
-        ], 403);
+        $data = $request->validate([
+            'finca_id' => ['required', 'exists:fincas,id'],
+            'raza_id' => ['required', 'exists:razas,id'],
+            'numero_arete' => ['required', 'string', 'max:100', 'unique:bovinos,numero_arete'],
+            'nombre_animal' => ['nullable', 'string', 'max:255'],
+            'sexo' => ['required', 'in:macho,hembra'],
+            'fecha_nacimiento' => ['nullable', 'date'],
+            'notas' => ['nullable', 'string'],
+        ]);
+
+        $finca = Finca::findOrFail($data['finca_id']);
+
+        $this->authorize('view', $finca);
+
+        $bovino = Bovino::create($data);
+
+        return ApiResponse::resource(
+            resource: new BovinoResource($bovino->load(['finca', 'raza'])),
+            message: 'Bovino registrado correctamente.',
+            status: 201,
+        );
     }
-
-    $data = $request->validate([
-        'finca_id'         => ['required', 'exists:fincas,id'],
-        'raza_id'          => ['required', 'exists:razas,id'],
-        'numero_arete'     => ['required', 'string', 'max:100', 'unique:bovinos,numero_arete'],
-        'nombre_animal'    => ['nullable', 'string', 'max:255'],
-        'sexo'             => ['required', 'in:macho,hembra'],
-        'fecha_nacimiento' => ['nullable', 'date'],
-        'notas'            => ['nullable', 'string'],
-    ]);
-
-    $finca = Finca::findOrFail($data['finca_id']);
-
-    if ($finca->propietario_id !== $usuario->id) {
-        return response()->json([
-            'mensaje' => 'No podés registrar bovinos en una finca que no es tuya.',
-        ], 403);
-    }
-
-    $bovino = Bovino::create($data);
-
-    return response()->json([
-        'mensaje' => 'Bovino registrado correctamente.',
-        'data'    => $bovino->load(['finca', 'raza']),
-    ], 201);
-}
 
     public function show(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('view', $bovino);
 
-        return response()->json($bovino->load(['finca', 'raza', 'pesajes']));
+        return ApiResponse::resource(
+            resource: new BovinoResource($bovino->load(['finca', 'raza', 'pesajes'])),
+            message: 'Bovino obtenido correctamente.',
+        );
     }
 
     public function update(Request $request, Bovino $bovino): JsonResponse
@@ -86,10 +85,10 @@ class BovinoController extends Controller
 
         $bovino->update($data);
 
-        return response()->json([
-            'mensaje' => 'Bovino actualizado correctamente.',
-            'data'    => $bovino->fresh()->load(['finca', 'raza']),
-        ]);
+        return ApiResponse::resource(
+            resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),
+            message: 'Bovino actualizado correctamente.',
+        );
     }
 
     public function destroy(Request $request, Bovino $bovino): JsonResponse
@@ -98,9 +97,9 @@ class BovinoController extends Controller
 
         $bovino->delete();
 
-        return response()->json([
-            'mensaje' => 'Bovino eliminado correctamente.',
-        ]);
+        return ApiResponse::success(
+            message: 'Bovino eliminado correctamente.',
+        );
     }
 
     public function marcarInactivo(Request $request, Bovino $bovino): JsonResponse
@@ -112,17 +111,18 @@ class BovinoController extends Controller
         ]);
 
         if (! $bovino->estaActivo()) {
-            return response()->json([
-                'mensaje' => 'El bovino ya está inactivo.',
-            ], 422);
+            return ApiResponse::error(
+                message: 'El bovino ya está inactivo.',
+                status: 422,
+            );
         }
 
         $bovino->marcarInactivo($data['motivo']);
 
-        return response()->json([
-            'mensaje' => 'Bovino marcado como inactivo.',
-            'data'    => $bovino->fresh(),
-        ]);
+        return ApiResponse::resource(
+            resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),
+            message: 'Bovino marcado como inactivo.',
+        );
     }
 
     public function marcarActivo(Request $request, Bovino $bovino): JsonResponse
@@ -130,16 +130,17 @@ class BovinoController extends Controller
         $this->authorize('update', $bovino);
 
         if ($bovino->estaActivo()) {
-            return response()->json([
-                'mensaje' => 'El bovino ya está activo.',
-            ], 422);
+            return ApiResponse::error(
+                message: 'El bovino ya está activo.',
+                status: 422,
+            );
         }
 
         $bovino->marcarActivo();
 
-        return response()->json([
-            'mensaje' => 'Bovino reactivado correctamente.',
-            'data'    => $bovino->fresh(),
-        ]);
+        return ApiResponse::resource(
+            resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),
+            message: 'Bovino reactivado correctamente.',
+        );
     }
 }

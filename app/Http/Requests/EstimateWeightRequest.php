@@ -18,7 +18,7 @@ class EstimateWeightRequest extends FormRequest
         return [
             'bovino_id' => ['required', 'exists:bovinos,id'],
             'foto' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
-            'constante_raza' => ['required', 'numeric', 'min:1'],
+            'raza_id' => ['required', 'exists:razas,id'],
             'modo_offline' => ['sometimes', 'boolean'],
         ];
     }
@@ -32,8 +32,8 @@ class EstimateWeightRequest extends FormRequest
             'foto.image' => 'El archivo debe ser una imagen.',
             'foto.mimes' => 'La imagen debe ser JPEG, PNG o WEBP.',
             'foto.max' => 'La imagen no debe superar los 10 MB.',
-            'constante_raza.required' => 'La constante de raza es obligatoria.',
-            'constante_raza.numeric' => 'La constante de raza debe ser un número.',
+            'raza_id.required' => 'La raza es obligatoria.',
+            'raza_id.exists' => 'La raza seleccionada no existe.',
         ];
     }
 }

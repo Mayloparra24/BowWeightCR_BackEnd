@@ -1,14 +1,18 @@
 <?php
+
+use App\Http\Controllers\AsignacionVeterinarioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\BovinoController;
 use App\Http\Controllers\FincaController;
 use App\Http\Controllers\PesajeController;
+use App\Http\Controllers\RazaController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\WeightEstimationController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AsignacionVeterinarioController;
 
 // Rutas públicas
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
 
 // Rutas protegidas con Sanctum
 Route::middleware('auth:sanctum')->group(function () {
@@ -27,10 +31,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('bovinos/{bovino}/pesajes', [PesajeController::class, 'index']);
     Route::post('/pesajes', [PesajeController::class, 'store']);
     Route::put('/pesajes/{pesaje}/corregir', [PesajeController::class, 'correct']);
-    Route::post('/pesajes/estimar', [WeightEstimationController::class, 'estimate']);
+    Route::post('/pesajes/estimar', [WeightEstimationController::class, 'estimate'])->middleware('throttle:estimacion-ia');
 
     // Asignaciones de veterinarios
     Route::get('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'index']);
     Route::post('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'store']);
     Route::delete('fincas/{finca}/veterinarios/{asignacion}', [AsignacionVeterinarioController::class, 'destroy']);
+
+    // Razas
+    Route::get('razas', [RazaController::class, 'index']);
+
+    // Usuarios (solo administradores)
+    Route::apiResource('usuarios', UsuarioController::class);
+
+    // Bitácora de auditoría (solo administradores)
+    Route::get('bitacora', [BitacoraController::class, 'index']);
 });

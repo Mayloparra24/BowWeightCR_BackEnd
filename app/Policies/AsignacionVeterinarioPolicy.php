@@ -1,24 +1,39 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\AsignacionVeterinario;
+use App\Models\Finca;
 use App\Models\Usuario;
 
 class AsignacionVeterinarioPolicy
 {
-    public function viewAny(Usuario $usuario): bool
+    public function viewAny(Usuario $usuario, Finca $finca): bool
     {
-        return $usuario->esGanadero() || $usuario->esAdministrador();
+        if ($usuario->esAdministrador()) {
+            return true;
+        }
+
+        return $finca->propietario_id === $usuario->id;
     }
 
-    public function create(Usuario $usuario): bool
+    public function create(Usuario $usuario, Finca $finca): bool
     {
-        return $usuario->esGanadero();
+        if (! $usuario->esGanadero()) {
+            return false;
+        }
+
+        return $finca->propietario_id === $usuario->id;
     }
 
     public function delete(Usuario $usuario, AsignacionVeterinario $asignacion): bool
     {
-        return $usuario->esGanadero() && $asignacion->asignado_por === $usuario->id;
+        if (! $usuario->esGanadero()) {
+            return false;
+        }
+
+        return $asignacion->finca->propietario_id === $usuario->id;
     }
 }

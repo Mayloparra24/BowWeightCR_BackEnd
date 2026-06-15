@@ -18,7 +18,7 @@ class RazaFactory extends Factory
     {
         return [
             'nombre_raza' => fake()->unique()->word(),
-            'enfoque' => fake()->randomElement(['carne', 'doble_proposito', 'leche']),
+            'enfoque' => fake()->randomElement(['Carne', 'Doble Propósito', 'Leche']),
             'constante_peso' => fake()->randomFloat(2, 200, 280),
             'descripcion' => fake()->sentence(),
         ];

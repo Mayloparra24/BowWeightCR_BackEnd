@@ -14,6 +14,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -53,19 +54,21 @@ class WeightEstimationControllerTest extends TestCase
         ]);
 
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
-        $raza = Raza::factory()->create();
+        $raza = Raza::factory()->create(['constante_peso' => 250]);
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
 
         $response = $this->postJson('/api/pesajes/estimar', [
             'bovino_id' => $bovino->id,
             'foto' => UploadedFile::fake()->image('bovino.jpg'),
-            'constante_raza' => 250,
+            'raza_id' => $raza->id,
         ]);
 
         $response->assertOk()
-            ->assertJsonPath('data.peso_estimado_kg', '450.50')
-            ->assertJsonPath('data.confianza_yolo', '0.9200');
+            ->assertJsonPath('data.peso_estimado', 450.5)
+            ->assertJsonPath('data.confianza_ia', 0.92);
 
         $this->assertDatabaseHas('registros_pesaje', [
             'bovino_id' => $bovino->id,
@@ -82,14 +85,16 @@ class WeightEstimationControllerTest extends TestCase
         Queue::fake();
 
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
-        $raza = Raza::factory()->create();
+        $raza = Raza::factory()->create(['constante_peso' => 250]);
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
 
         $response = $this->postJson('/api/pesajes/estimar', [
             'bovino_id' => $bovino->id,
             'foto' => UploadedFile::fake()->image('bovino.jpg'),
-            'constante_raza' => 250,
+            'raza_id' => $raza->id,
             'modo_offline' => true,
         ]);
 
@@ -117,14 +122,16 @@ class WeightEstimationControllerTest extends TestCase
         ]);
 
         $user = Usuario::factory()->create();
+        Sanctum::actingAs($user);
+
         $finca = Finca::factory()->create(['propietario_id' => $user->id]);
-        $raza = Raza::factory()->create();
+        $raza = Raza::factory()->create(['constante_peso' => 250]);
         $bovino = Bovino::factory()->create(['finca_id' => $finca->id, 'raza_id' => $raza->id]);
 
         $response = $this->postJson('/api/pesajes/estimar', [
             'bovino_id' => $bovino->id,
             'foto' => UploadedFile::fake()->image('bovino.jpg'),
-            'constante_raza' => 250,
+            'raza_id' => $raza->id,
         ]);
 
         $response->assertUnprocessable()
