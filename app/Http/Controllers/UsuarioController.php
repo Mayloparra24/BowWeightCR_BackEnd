@@ -9,6 +9,7 @@ use App\Models\Usuario;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UsuarioController extends Controller
@@ -44,6 +45,7 @@ class UsuarioController extends Controller
             'contrasena_hash' => $data['contrasena'],
             'rol' => $data['rol'],
             'esta_activo' => $data['esta_activo'] ?? true,
+            'debe_cambiar_contrasena' => true,
         ]);
 
         return ApiResponse::resource(
@@ -84,6 +86,7 @@ class UsuarioController extends Controller
 
         if (isset($data['contrasena'])) {
             $updateData['contrasena_hash'] = Hash::make($data['contrasena']);
+            $updateData['debe_cambiar_contrasena'] = true;
         }
 
         $usuario->update($updateData);
