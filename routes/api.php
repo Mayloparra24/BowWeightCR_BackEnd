@@ -8,6 +8,7 @@ use App\Http\Controllers\FincaController;
 use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\RazaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\WeightEstimationController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login')->middlewa
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/cambiar-contrasena', [PasswordController::class, 'cambiarContrasena']);
 
     // Fincas
     Route::apiResource('fincas', FincaController::class);

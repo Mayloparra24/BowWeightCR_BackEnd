@@ -20,6 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
     'contrasena_hash',
     'rol',
     'esta_activo',
+    'debe_cambiar_contrasena',
 ])]
 #[Hidden(['contrasena_hash', 'remember_token'])]
 class Usuario extends Authenticatable
@@ -36,6 +37,7 @@ class Usuario extends Authenticatable
             'correo_verificado_en' => 'datetime',
             'contrasena_hash' => 'hashed',
             'esta_activo' => 'boolean',
+            'debe_cambiar_contrasena' => 'boolean',
         ];
     }
 

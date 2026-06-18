@@ -17,6 +17,7 @@ class UserResource extends JsonResource
             'correo_electronico' => $this->correo_electronico,
             'rol' => $this->rol,
             'esta_activo' => $this->esta_activo,
+            'debe_cambiar_contrasena' => $this->debe_cambiar_contrasena,
             'correo_verificado_en' => $this->correo_verificado_en?->toIso8601String(),
             'creado_en' => $this->created_at?->toIso8601String(),
         ];
