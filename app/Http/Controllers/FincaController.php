@@ -10,6 +10,31 @@ use Illuminate\Http\Request;
 
 class FincaController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true,
+            'message' => 'Fincas obtenidas correctamente.',
+            'data' => [
+                [
+                    'id' => 1,
+                    'propietario_id' => 1,
+                    'nombre_finca' => 'Finca La Esperanza',
+                    'ubicacion' => 'Liberia, Guanacaste',
+                    'canton' => 'Liberia',
+                    'provincia' => 'Guanacaste',
+                    'esta_activa' => true,
+                    'creado_en' => '2026-06-17T00:00:00+00:00',
+                    'propietario' => [
+                        'id' => 1,
+                        'nombre_completo' => 'Iván Chavarría',
+                        'correo_electronico' => 'ganadero@bovweight.com',
+                        'rol' => 'ganadero',
+                    ],
+                ],
+            ],
+        ],
+        status: 200,
+    )]
     public function index(Request $request): JsonResponse
     {
         $usuario = $request->user();
@@ -33,6 +58,29 @@ class FincaController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true,
+            'message' => 'Finca registrada correctamente.',
+            'data' => [
+                'id' => 1,
+                'propietario_id' => 1,
+                'nombre_finca' => 'Finca La Esperanza',
+                'ubicacion' => 'Liberia, Guanacaste',
+                'canton' => 'Liberia',
+                'provincia' => 'Guanacaste',
+                'esta_activa' => true,
+                'creado_en' => '2026-06-17T00:00:00+00:00',
+                'propietario' => [
+                    'id' => 1,
+                    'nombre_completo' => 'Iván Chavarría',
+                    'correo_electronico' => 'ganadero@bovweight.com',
+                    'rol' => 'ganadero',
+                ],
+            ],
+        ],
+        status: 201,
+    )]
     public function store(Request $request): JsonResponse
     {
         $this->authorize('create', Finca::class);
@@ -56,6 +104,18 @@ class FincaController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true, 'message' => 'Finca obtenida correctamente.',
+            'data' => [
+                'id' => 1, 'propietario_id' => 1, 'nombre_finca' => 'Finca La Esperanza',
+                'ubicacion' => 'Liberia, Guanacaste', 'canton' => 'Liberia', 'provincia' => 'Guanacaste',
+                'esta_activa' => true, 'creado_en' => '2026-06-17T00:00:00+00:00',
+                'propietario' => ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero'],
+                'bovinos' => [],
+            ],
+        ], status: 200,
+    )]
     public function show(Request $request, Finca $finca): JsonResponse
     {
         $this->authorize('view', $finca);
@@ -66,6 +126,17 @@ class FincaController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true, 'message' => 'Finca actualizada correctamente.',
+            'data' => [
+                'id' => 1, 'propietario_id' => 1, 'nombre_finca' => 'Finca La Esperanza',
+                'ubicacion' => 'Liberia, Guanacaste', 'canton' => 'Liberia', 'provincia' => 'Guanacaste',
+                'esta_activa' => true, 'creado_en' => '2026-06-17T00:00:00+00:00',
+                'propietario' => ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero'],
+            ],
+        ], status: 200,
+    )]
     public function update(Request $request, Finca $finca): JsonResponse
     {
         $this->authorize('update', $finca);
@@ -86,6 +157,10 @@ class FincaController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Finca eliminada correctamente.', 'data' => null],
+        status: 200,
+    )]
     public function destroy(Request $request, Finca $finca): JsonResponse
     {
         $this->authorize('delete', $finca);

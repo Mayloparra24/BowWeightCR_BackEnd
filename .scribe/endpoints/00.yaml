@@ -50,7 +50,19 @@ endpoints:
       correo_electronico: gbailey@example.net
       contrasena: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Sesi\u00f3n iniciada correctamente.","data":{"token":"1|abc123def456...","usuario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}}}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"success":false,"message":"Credenciales incorrectas.","error":null}'
+        headers: []
+        description: 'Credenciales inválidas'
     responseFields: []
     auth: []
     controller: null
@@ -81,7 +93,50 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Sesi\u00f3n cerrada correctamente.","data":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/me
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Usuario autenticado obtenido correctamente.","data":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -148,7 +203,50 @@ endpoints:
       contrasena_nueva: architecto
       contrasena_nueva_confirmation: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Contrase\u00f1a actualizada correctamente.","data":{"token":"1|abc123def456...","usuario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false}}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/fincas
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Fincas obtenidas correctamente.","data":[{"id":1,"propietario_id":1,"nombre_finca":"Finca La Esperanza","ubicacion":"Liberia, Guanacaste","canton":"Liberia","provincia":"Guanacaste","esta_activa":true,"creado_en":"2026-06-17T00:00:00+00:00","propietario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero"}}]}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -227,7 +325,62 @@ endpoints:
       canton: g
       provincia: z
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Finca registrada correctamente.","data":{"id":1,"propietario_id":1,"nombre_finca":"Finca La Esperanza","ubicacion":"Liberia, Guanacaste","canton":"Liberia","provincia":"Guanacaste","esta_activa":true,"creado_en":"2026-06-17T00:00:00+00:00","propietario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero"}}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/fincas/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the finca.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Finca obtenida correctamente.","data":{"id":1,"propietario_id":1,"nombre_finca":"Finca La Esperanza","ubicacion":"Liberia, Guanacaste","canton":"Liberia","provincia":"Guanacaste","esta_activa":true,"creado_en":"2026-06-17T00:00:00+00:00","propietario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero"},"bovinos":[]}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -318,7 +471,7 @@ endpoints:
         name: esta_activa
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -329,9 +482,15 @@ endpoints:
       ubicacion: 'n'
       canton: g
       provincia: z
-      esta_activa: true
+      esta_activa: false
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Finca actualizada correctamente.","data":{"id":1,"propietario_id":1,"nombre_finca":"Finca La Esperanza","ubicacion":"Liberia, Guanacaste","canton":"Liberia","provincia":"Guanacaste","esta_activa":true,"creado_en":"2026-06-17T00:00:00+00:00","propietario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero"}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -374,7 +533,50 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Finca eliminada correctamente.","data":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/bovinos
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovinos obtenidos correctamente.","data":[{"id":1,"finca_id":1,"raza_id":1,"numero_arete":"1234567890","nombre_animal":"Torito","sexo":"macho","fecha_nacimiento":"2024-01-15","estado":"activo","notas":null,"creado_en":"2026-06-17T00:00:00+00:00","finca":{"id":1,"nombre_finca":"Finca La Esperanza"},"raza":{"id":1,"nombre_raza":"Brahman","enfoque":"Carne","constante_peso":140}}]}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -465,7 +667,7 @@ endpoints:
         name: fecha_nacimiento
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-18T03:29:03'
+        example: '2026-06-18T03:59:28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -488,10 +690,65 @@ endpoints:
       numero_arete: 'n'
       nombre_animal: g
       sexo: hembra
-      fecha_nacimiento: '2026-06-18T03:29:03'
+      fecha_nacimiento: '2026-06-18T03:59:28'
       notas: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Bovino registrado correctamente.","data":{"id":1,"finca_id":1,"raza_id":1,"numero_arete":"1234567890","nombre_animal":"Torito","sexo":"macho","estado":"activo","notas":null,"finca":{"id":1,"nombre_finca":"Finca La Esperanza"},"raza":{"id":1,"nombre_raza":"Brahman","enfoque":"Carne","constante_peso":140}}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/bovinos/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the bovino.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovino obtenido correctamente.","data":{"id":1,"finca_id":1,"raza_id":1,"numero_arete":"1234567890","nombre_animal":"Torito","sexo":"macho","estado":"activo","notas":null,"pesajes":[],"finca":{"id":1,"nombre_finca":"Finca La Esperanza"},"raza":{"id":1,"nombre_raza":"Brahman","enfoque":"Carne","constante_peso":140}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -573,7 +830,7 @@ endpoints:
         name: fecha_nacimiento
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-18T03:29:03'
+        example: '2026-06-18T03:59:28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -593,10 +850,16 @@ endpoints:
     cleanBodyParameters:
       nombre_animal: b
       sexo: macho
-      fecha_nacimiento: '2026-06-18T03:29:03'
+      fecha_nacimiento: '2026-06-18T03:59:28'
       notas: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovino actualizado correctamente.","data":{"id":1,"finca_id":1,"raza_id":1,"numero_arete":"1234567890","nombre_animal":"Torito","sexo":"macho","estado":"activo","finca":{"id":1,"nombre_finca":"Finca La Esperanza"},"raza":{"id":1,"nombre_raza":"Brahman","enfoque":"Carne","constante_peso":140}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -639,7 +902,13 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovino eliminado correctamente.","data":null}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -694,7 +963,13 @@ endpoints:
     cleanBodyParameters:
       motivo: b
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovino marcado como inactivo.","data":{"id":1,"numero_arete":"1234567890","nombre_animal":"Torito","estado":"inactivo"}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -737,7 +1012,62 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bovino reactivado correctamente.","data":{"id":1,"numero_arete":"1234567890","nombre_animal":"Torito","estado":"activo"}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/bovinos/{bovino}/pesajes'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      bovino:
+        custom: []
+        name: bovino
+        description: 'The bovino.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      bovino: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Pesajes obtenidos correctamente.","data":[{"id":1,"bovino_id":1,"peso_registrado":420.5,"peso_estimado":null,"peso_final":420.5,"tipo_pesaje":"manual","es_correccion_manual":false,"notas_correccion":null,"confianza_ia":null,"registrado_el":"2026-06-17T10:00:00+00:00"}],"meta":{"current_page":1,"last_page":1,"per_page":15,"total":1,"from":1,"to":1}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -804,7 +1134,13 @@ endpoints:
       peso_registrado: 22
       notas_correccion: g
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Pesaje manual registrado correctamente.","data":{"id":1,"bovino_id":1,"peso_registrado":420.5,"peso_estimado":null,"peso_final":420.5,"tipo_pesaje":"manual","es_correccion_manual":false,"notas_correccion":"Pesaje manual de control","confianza_ia":null,"registrado_el":"2026-06-17T10:00:00+00:00","fotografia":null,"creado_por":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda"}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -871,7 +1207,13 @@ endpoints:
       peso_registrado: 1
       notas_correccion: 'n'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Pesaje corregido correctamente.","data":{"id":1,"bovino_id":1,"peso_registrado":425,"peso_estimado":null,"peso_final":425,"tipo_pesaje":"manual","es_correccion_manual":true,"notas_correccion":"Correcci\u00f3n por error de tipeo","registrado_el":"2026-06-17T10:00:00+00:00"}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -938,7 +1280,7 @@ endpoints:
         name: modo_offline
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -947,10 +1289,65 @@ endpoints:
     cleanBodyParameters:
       bovino_id: architecto
       raza_id: architecto
-      modo_offline: true
+      modo_offline: false
     fileParameters:
       foto: null
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Peso estimado correctamente.","data":{"id":1,"bovino_id":1,"peso_registrado":null,"peso_estimado":425.3,"peso_final":425.3,"tipo_pesaje":"ia","es_correccion_manual":false,"confianza_ia":0.92,"registrado_el":"2026-06-17T10:00:00+00:00","bovino":{"id":1,"numero_arete":"1234567890","nombre_animal":"Torito"}}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/fincas/{finca}/veterinarios'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      finca:
+        custom: []
+        name: finca
+        description: 'The finca.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      finca: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Veterinarios asignados obtenidos correctamente.","data":[{"id":1,"veterinario_id":2,"finca_id":1,"esta_activa":true,"asignado_el":"2026-06-17T00:00:00+00:00","veterinario":{"id":2,"nombre_completo":"Dr. Roberto Solano","correo_electronico":"veterinario@bovweight.com","rol":"veterinario"}}]}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -1005,7 +1402,13 @@ endpoints:
     cleanBodyParameters:
       veterinario_id: architecto
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Veterinario asignado correctamente.","data":{"id":1,"veterinario_id":2,"finca_id":1,"esta_activa":true,"asignado_el":"2026-06-17T00:00:00+00:00","veterinario":{"id":2,"nombre_completo":"Dr. Roberto Solano","correo_electronico":"veterinario@bovweight.com","rol":"veterinario"}}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -1060,7 +1463,87 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Veterinario removido de la finca correctamente.","data":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/razas
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Razas obtenidas correctamente.","data":[{"id":1,"nombre_raza":"Brahman","enfoque":"Carne","constante_peso":140,"descripcion":"Raza de carne..."},{"id":2,"nombre_raza":"Jersey","enfoque":"Leche","constante_peso":110,"descripcion":"Raza lechera..."}]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/usuarios
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Usuarios obtenidos correctamente.","data":[{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"},{"id":2,"nombre_completo":"Dr. Roberto Solano","correo_electronico":"veterinario@bovweight.com","rol":"veterinario","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}],"meta":{"current_page":1,"last_page":1,"per_page":15,"total":2,"from":1,"to":2}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -1127,7 +1610,7 @@ endpoints:
         name: rol
         description: ''
         required: true
-        example: ganadero
+        example: veterinario
         type: string
         enumValues:
           - administrador
@@ -1142,7 +1625,7 @@ endpoints:
         name: esta_activo
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1152,10 +1635,65 @@ endpoints:
       nombre_completo: b
       correo_electronico: zbailey@example.net
       contrasena: iyvdljnikhwaykcmyuwpwlvqwr
-      rol: ganadero
-      esta_activo: true
+      rol: veterinario
+      esta_activo: false
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"success":true,"message":"Usuario creado correctamente.","data":{"id":1,"nombre_completo":"Asistente de Prueba","correo_electronico":"asistente@bovweight.cr","rol":"asistente","esta_activo":true,"debe_cambiar_contrasena":true,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/usuarios/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the usuario.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Usuario obtenido correctamente.","data":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -1235,7 +1773,7 @@ endpoints:
         name: rol
         description: ''
         required: false
-        example: asistente
+        example: ganadero
         type: string
         enumValues:
           - administrador
@@ -1250,7 +1788,7 @@ endpoints:
         name: esta_activo
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1260,10 +1798,16 @@ endpoints:
       nombre_completo: b
       correo_electronico: zbailey@example.net
       contrasena: iyvdljnikhwaykcmyuwpwlvqwr
-      rol: asistente
-      esta_activo: false
+      rol: ganadero
+      esta_activo: true
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Usuario actualizado correctamente.","data":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda","correo_electronico":"ganadero@bovweight.com","rol":"ganadero","esta_activo":true,"debe_cambiar_contrasena":false,"correo_verificado_en":null,"creado_en":"2026-06-17T00:00:00+00:00"}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -1306,7 +1850,50 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Usuario eliminado correctamente.","data":null}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/bitacora
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"message":"Bit\u00e1cora obtenida correctamente.","data":[{"id":1,"accion":"Inicio de sesi\u00f3n","entidad_tipo":"usuario","entidad_id":1,"creada_el":"2026-06-17T10:00:00+00:00","usuario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda"}},{"id":2,"accion":"Creaci\u00f3n de bovino","entidad_tipo":"bovino","entidad_id":3,"creada_el":"2026-06-17T11:00:00+00:00","usuario":{"id":1,"nombre_completo":"Iv\u00e1n Chavarr\u00eda"}}],"meta":{"current_page":1,"last_page":1,"per_page":15,"total":2,"from":1,"to":2}}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null

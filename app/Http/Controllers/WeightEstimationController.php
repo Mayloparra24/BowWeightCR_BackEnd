@@ -19,6 +19,12 @@ use Illuminate\Http\JsonResponse;
 
 class WeightEstimationController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Peso estimado correctamente.', 'data' => [
+            'id' => 1, 'bovino_id' => 1, 'peso_registrado' => null, 'peso_estimado' => 425.3, 'peso_final' => 425.3, 'tipo_pesaje' => 'ia', 'es_correccion_manual' => false, 'confianza_ia' => 0.92, 'registrado_el' => '2026-06-17T10:00:00+00:00',
+            'bovino' => ['id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito'],
+        ]], status: 200,
+    )]
     public function estimate(EstimateWeightRequest $request): JsonResponse
     {
         $bovino = Bovino::findOrFail($request->validated('bovino_id'));

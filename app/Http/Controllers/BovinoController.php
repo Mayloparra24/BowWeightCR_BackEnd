@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class BovinoController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovinos obtenidos correctamente.', 'data' => [
+            ['id' => 1, 'finca_id' => 1, 'raza_id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'sexo' => 'macho', 'fecha_nacimiento' => '2024-01-15', 'estado' => 'activo', 'notas' => null, 'creado_en' => '2026-06-17T00:00:00+00:00',
+                'finca' => ['id' => 1, 'nombre_finca' => 'Finca La Esperanza'],
+                'raza' => ['id' => 1, 'nombre_raza' => 'Brahman', 'enfoque' => 'Carne', 'constante_peso' => 140.0],
+            ],
+        ]], status: 200,
+    )]
     public function index(Request $request): JsonResponse
     {
         $usuario = $request->user();
@@ -34,6 +42,13 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino registrado correctamente.', 'data' => [
+            'id' => 1, 'finca_id' => 1, 'raza_id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'sexo' => 'macho', 'estado' => 'activo', 'notas' => null,
+            'finca' => ['id' => 1, 'nombre_finca' => 'Finca La Esperanza'],
+            'raza' => ['id' => 1, 'nombre_raza' => 'Brahman', 'enfoque' => 'Carne', 'constante_peso' => 140.0],
+        ]], status: 201,
+    )]
     public function store(Request $request): JsonResponse
     {
         $this->authorize('create', Bovino::class);
@@ -61,6 +76,13 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino obtenido correctamente.', 'data' => [
+            'id' => 1, 'finca_id' => 1, 'raza_id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'sexo' => 'macho', 'estado' => 'activo', 'notas' => null, 'pesajes' => [],
+            'finca' => ['id' => 1, 'nombre_finca' => 'Finca La Esperanza'],
+            'raza' => ['id' => 1, 'nombre_raza' => 'Brahman', 'enfoque' => 'Carne', 'constante_peso' => 140.0],
+        ]], status: 200,
+    )]
     public function show(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('view', $bovino);
@@ -71,6 +93,13 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino actualizado correctamente.', 'data' => [
+            'id' => 1, 'finca_id' => 1, 'raza_id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'sexo' => 'macho', 'estado' => 'activo',
+            'finca' => ['id' => 1, 'nombre_finca' => 'Finca La Esperanza'],
+            'raza' => ['id' => 1, 'nombre_raza' => 'Brahman', 'enfoque' => 'Carne', 'constante_peso' => 140.0],
+        ]], status: 200,
+    )]
     public function update(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('update', $bovino);
@@ -91,6 +120,10 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino eliminado correctamente.', 'data' => null],
+        status: 200,
+    )]
     public function destroy(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('delete', $bovino);
@@ -102,6 +135,11 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino marcado como inactivo.', 'data' => [
+            'id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'estado' => 'inactivo',
+        ]], status: 200,
+    )]
     public function marcarInactivo(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('update', $bovino);
@@ -125,6 +163,11 @@ class BovinoController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Bovino reactivado correctamente.', 'data' => [
+            'id' => 1, 'numero_arete' => '1234567890', 'nombre_animal' => 'Torito', 'estado' => 'activo',
+        ]], status: 200,
+    )]
     public function marcarActivo(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('update', $bovino);
