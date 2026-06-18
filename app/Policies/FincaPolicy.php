@@ -18,7 +18,7 @@ class FincaPolicy
             return true;
         }
 
-        if ($usuario->esGanadero()) {
+        if ($usuario->esGanadero() || $usuario->esAsistente()) {
             return $finca->propietario_id === $usuario->id;
         }
 
@@ -34,16 +34,16 @@ class FincaPolicy
 
     public function create(Usuario $usuario): bool
     {
-        return $usuario->esGanadero();
+        return $usuario->esGanadero() || $usuario->esAsistente();
     }
 
     public function update(Usuario $usuario, Finca $finca): bool
     {
-        return $usuario->esGanadero() && $finca->propietario_id === $usuario->id;
+        return ($usuario->esGanadero() || $usuario->esAsistente()) && $finca->propietario_id === $usuario->id;
     }
 
     public function delete(Usuario $usuario, Finca $finca): bool
     {
-        return $usuario->esGanadero() && $finca->propietario_id === $usuario->id;
+        return ($usuario->esGanadero() || $usuario->esAsistente()) && $finca->propietario_id === $usuario->id;
     }
 }

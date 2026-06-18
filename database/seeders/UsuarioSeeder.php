@@ -32,5 +32,13 @@ class UsuarioSeeder extends Seeder
             'rol'                => 'administrador',
             'esta_activo'        => true,
         ]);
+
+        Usuario::create([
+            'nombre_completo'    => 'Asistente de Campo',
+            'correo_electronico' => 'asistente@bovweight.cr',
+            'contrasena_hash'    => bcrypt('BovWeight2026!'),
+            'rol'                => 'asistente',
+            'esta_activo'        => true,
+        ]);
     }
 }
