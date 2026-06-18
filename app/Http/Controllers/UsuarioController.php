@@ -14,6 +14,12 @@ use Illuminate\Validation\Rule;
 
 class UsuarioController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Usuarios obtenidos correctamente.', 'data' => [
+            ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero', 'esta_activo' => true, 'debe_cambiar_contrasena' => false, 'correo_verificado_en' => null, 'creado_en' => '2026-06-17T00:00:00+00:00'],
+            ['id' => 2, 'nombre_completo' => 'Dr. Roberto Solano', 'correo_electronico' => 'veterinario@bovweight.com', 'rol' => 'veterinario', 'esta_activo' => true, 'debe_cambiar_contrasena' => false, 'correo_verificado_en' => null, 'creado_en' => '2026-06-17T00:00:00+00:00'],
+        ], 'meta' => ['current_page' => 1, 'last_page' => 1, 'per_page' => 15, 'total' => 2, 'from' => 1, 'to' => 2]], status: 200,
+    )]
     public function index(Request $request): JsonResponse
     {
         $this->authorize('administrar-usuarios');
@@ -27,6 +33,11 @@ class UsuarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Usuario creado correctamente.', 'data' => [
+            'id' => 1, 'nombre_completo' => 'Asistente de Prueba', 'correo_electronico' => 'asistente@bovweight.cr', 'rol' => 'asistente', 'esta_activo' => true, 'debe_cambiar_contrasena' => true, 'correo_verificado_en' => null, 'creado_en' => '2026-06-17T00:00:00+00:00',
+        ]], status: 201,
+    )]
     public function store(Request $request): JsonResponse
     {
         $this->authorize('administrar-usuarios');
@@ -55,6 +66,9 @@ class UsuarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Usuario obtenido correctamente.', 'data' => ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero', 'esta_activo' => true, 'debe_cambiar_contrasena' => false, 'correo_verificado_en' => null, 'creado_en' => '2026-06-17T00:00:00+00:00']], status: 200,
+    )]
     public function show(Usuario $usuario): JsonResponse
     {
         $this->authorize('administrar-usuarios');
@@ -65,6 +79,9 @@ class UsuarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Usuario actualizado correctamente.', 'data' => ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero', 'esta_activo' => true, 'debe_cambiar_contrasena' => false, 'correo_verificado_en' => null, 'creado_en' => '2026-06-17T00:00:00+00:00']], status: 200,
+    )]
     public function update(Request $request, Usuario $usuario): JsonResponse
     {
         $this->authorize('administrar-usuarios');
@@ -97,6 +114,9 @@ class UsuarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Usuario eliminado correctamente.', 'data' => null], status: 200,
+    )]
     public function destroy(Usuario $usuario): JsonResponse
     {
         $this->authorize('administrar-usuarios');

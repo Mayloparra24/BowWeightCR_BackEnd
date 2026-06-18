@@ -11,6 +11,31 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true,
+            'message' => 'Sesión iniciada correctamente.',
+            'data' => [
+                'token' => '1|abc123def456...',
+                'usuario' => [
+                    'id' => 1,
+                    'nombre_completo' => 'Iván Chavarría',
+                    'correo_electronico' => 'ganadero@bovweight.com',
+                    'rol' => 'ganadero',
+                    'esta_activo' => true,
+                    'debe_cambiar_contrasena' => false,
+                    'correo_verificado_en' => null,
+                    'creado_en' => '2026-06-17T00:00:00+00:00',
+                ],
+            ],
+        ],
+        status: 200,
+    )]
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => false, 'message' => 'Credenciales incorrectas.', 'error' => null],
+        status: 401,
+        description: 'Credenciales inválidas',
+    )]
     public function login(Request $request): JsonResponse
     {
         $request->validate([
@@ -45,6 +70,10 @@ class AuthController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Sesión cerrada correctamente.', 'data' => null],
+        status: 200,
+    )]
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
@@ -54,6 +83,23 @@ class AuthController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: [
+            'success' => true,
+            'message' => 'Usuario autenticado obtenido correctamente.',
+            'data' => [
+                'id' => 1,
+                'nombre_completo' => 'Iván Chavarría',
+                'correo_electronico' => 'ganadero@bovweight.com',
+                'rol' => 'ganadero',
+                'esta_activo' => true,
+                'debe_cambiar_contrasena' => false,
+                'correo_verificado_en' => null,
+                'creado_en' => '2026-06-17T00:00:00+00:00',
+            ],
+        ],
+        status: 200,
+    )]
     public function me(Request $request): JsonResponse
     {
         return ApiResponse::resource(

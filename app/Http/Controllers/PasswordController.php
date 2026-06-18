@@ -14,6 +14,12 @@ use Illuminate\Validation\ValidationException;
 
 class PasswordController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Contraseña actualizada correctamente.', 'data' => [
+            'token' => '1|abc123def456...',
+            'usuario' => ['id' => 1, 'nombre_completo' => 'Iván Chavarría', 'correo_electronico' => 'ganadero@bovweight.com', 'rol' => 'ganadero', 'esta_activo' => true, 'debe_cambiar_contrasena' => false],
+        ]], status: 200,
+    )]
     public function cambiarContrasena(Request $request): JsonResponse
     {
         $data = $request->validate([

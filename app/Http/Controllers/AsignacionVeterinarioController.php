@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class AsignacionVeterinarioController extends Controller
 {
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Veterinarios asignados obtenidos correctamente.', 'data' => [
+            ['id' => 1, 'veterinario_id' => 2, 'finca_id' => 1, 'esta_activa' => true, 'asignado_el' => '2026-06-17T00:00:00+00:00', 'veterinario' => ['id' => 2, 'nombre_completo' => 'Dr. Roberto Solano', 'correo_electronico' => 'veterinario@bovweight.com', 'rol' => 'veterinario']],
+        ]], status: 200,
+    )]
     public function index(Request $request, int $fincaId): JsonResponse
     {
         $finca = Finca::findOrFail($fincaId);
@@ -30,6 +35,11 @@ class AsignacionVeterinarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Veterinario asignado correctamente.', 'data' => [
+            'id' => 1, 'veterinario_id' => 2, 'finca_id' => 1, 'esta_activa' => true, 'asignado_el' => '2026-06-17T00:00:00+00:00', 'veterinario' => ['id' => 2, 'nombre_completo' => 'Dr. Roberto Solano', 'correo_electronico' => 'veterinario@bovweight.com', 'rol' => 'veterinario'],
+        ]], status: 201,
+    )]
     public function store(Request $request, int $fincaId): JsonResponse
     {
         $finca = Finca::findOrFail($fincaId);
@@ -75,6 +85,9 @@ class AsignacionVeterinarioController extends Controller
         );
     }
 
+    #[\Knuckles\Scribe\Attributes\Response(
+        content: ['success' => true, 'message' => 'Veterinario removido de la finca correctamente.', 'data' => null], status: 200,
+    )]
     public function destroy(Request $request, int $fincaId, int $asignacionId): JsonResponse
     {
         $finca = Finca::findOrFail($fincaId);
