@@ -31,7 +31,7 @@ class PesajePolicy
             return true;
         }
 
-        if ($usuario->esGanadero()) {
+        if ($usuario->esGanadero() || $usuario->esAsistente()) {
             return $bovino->finca->propietario_id === $usuario->id;
         }
 

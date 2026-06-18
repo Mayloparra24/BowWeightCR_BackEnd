@@ -97,4 +97,9 @@ public function getAuthIdentifierName(): string
     {
         return $this->rol === 'administrador';
     }
+
+    public function esAsistente(): bool
+    {
+        return $this->rol === 'asistente';
+    }
 }

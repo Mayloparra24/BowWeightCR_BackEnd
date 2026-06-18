@@ -54,6 +54,13 @@ class UsuarioFactory extends Factory
         ]);
     }
 
+    public function asistente(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'rol' => 'asistente',
+        ]);
+    }
+
     public function inactivo(): static
     {
         return $this->state(fn (array $attributes) => [
