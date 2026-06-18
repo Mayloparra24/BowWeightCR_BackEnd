@@ -21,7 +21,7 @@ class AsignacionVeterinarioPolicy
 
     public function create(Usuario $usuario, Finca $finca): bool
     {
-        if (! $usuario->esGanadero()) {
+        if (! $usuario->esGanadero() && ! $usuario->esAsistente()) {
             return false;
         }
 
@@ -30,7 +30,7 @@ class AsignacionVeterinarioPolicy
 
     public function delete(Usuario $usuario, AsignacionVeterinario $asignacion): bool
     {
-        if (! $usuario->esGanadero()) {
+        if (! $usuario->esGanadero() && ! $usuario->esAsistente()) {
             return false;
         }
 

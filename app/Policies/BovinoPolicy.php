@@ -18,7 +18,7 @@ class BovinoPolicy
             return true;
         }
 
-        if ($usuario->esGanadero()) {
+        if ($usuario->esGanadero() || $usuario->esAsistente()) {
             return $bovino->finca->propietario_id === $usuario->id;
         }
 
@@ -34,18 +34,18 @@ class BovinoPolicy
 
     public function create(Usuario $usuario): bool
     {
-        return $usuario->esGanadero();
+        return $usuario->esGanadero() || $usuario->esAsistente();
     }
 
     public function update(Usuario $usuario, Bovino $bovino): bool
     {
-        return $usuario->esGanadero() &&
+        return ($usuario->esGanadero() || $usuario->esAsistente()) &&
             $bovino->finca->propietario_id === $usuario->id;
     }
 
     public function delete(Usuario $usuario, Bovino $bovino): bool
     {
-        return $usuario->esGanadero() &&
+        return ($usuario->esGanadero() || $usuario->esAsistente()) &&
             $bovino->finca->propietario_id === $usuario->id;
     }
 }

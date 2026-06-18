@@ -34,7 +34,7 @@ class UsuarioController extends Controller
             'nombre_completo' => ['required', 'string', 'max:255'],
             'correo_electronico' => ['required', 'email', 'unique:usuarios,correo_electronico'],
             'contrasena' => ['required', 'string', 'min:8'],
-            'rol' => ['required', 'string', 'in:administrador,ganadero,veterinario'],
+            'rol' => ['required', 'string', 'in:administrador,ganadero,veterinario,asistente'],
             'esta_activo' => ['sometimes', 'boolean'],
         ]);
 
@@ -71,7 +71,7 @@ class UsuarioController extends Controller
             'nombre_completo' => ['sometimes', 'string', 'max:255'],
             'correo_electronico' => ['sometimes', 'email', Rule::unique('usuarios', 'correo_electronico')->ignore($usuario->id)],
             'contrasena' => ['sometimes', 'string', 'min:8'],
-            'rol' => ['sometimes', 'string', 'in:administrador,ganadero,veterinario'],
+            'rol' => ['sometimes', 'string', 'in:administrador,ganadero,veterinario,asistente'],
             'esta_activo' => ['sometimes', 'boolean'],
         ]);
 
