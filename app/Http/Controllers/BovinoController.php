@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BovinoResource;
+use App\Models\BitacoraActividad;
 use App\Models\Bovino;
 use App\Models\Finca;
 use App\Support\ApiResponse;
@@ -69,6 +70,15 @@ class BovinoController extends Controller
 
         $bovino = Bovino::create($data);
 
+        BitacoraActividad::registrar(
+            accion: 'crear',
+            usuario: $request->user(),
+            entidadTipo: 'bovino',
+            entidadId: $bovino->id,
+            descripcion: "Se registró el bovino {$bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new BovinoResource($bovino->load(['finca', 'raza'])),
             message: 'Bovino registrado correctamente.',
@@ -114,6 +124,15 @@ class BovinoController extends Controller
 
         $bovino->update($data);
 
+        BitacoraActividad::registrar(
+            accion: 'editar',
+            usuario: $request->user(),
+            entidadTipo: 'bovino',
+            entidadId: $bovino->id,
+            descripcion: "Se editó el bovino {$bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),
             message: 'Bovino actualizado correctamente.',
@@ -128,7 +147,19 @@ class BovinoController extends Controller
     {
         $this->authorize('delete', $bovino);
 
+        $identificacion = $bovino->identificacionBitacora();
+        $bovinoId = $bovino->id;
+
         $bovino->delete();
+
+        BitacoraActividad::registrar(
+            accion: 'eliminar',
+            usuario: $request->user(),
+            entidadTipo: 'bovino',
+            entidadId: $bovinoId,
+            descripcion: "Se eliminó el bovino {$identificacion}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::success(
             message: 'Bovino eliminado correctamente.',
@@ -157,6 +188,15 @@ class BovinoController extends Controller
 
         $bovino->marcarInactivo($data['motivo']);
 
+        BitacoraActividad::registrar(
+            accion: 'desactivar',
+            usuario: $request->user(),
+            entidadTipo: 'bovino',
+            entidadId: $bovino->id,
+            descripcion: "Se desactivó el bovino {$bovino->identificacionBitacora()}: {$data['motivo']}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),
             message: 'Bovino marcado como inactivo.',
@@ -180,6 +220,15 @@ class BovinoController extends Controller
         }
 
         $bovino->marcarActivo();
+
+        BitacoraActividad::registrar(
+            accion: 'activar',
+            usuario: $request->user(),
+            entidadTipo: 'bovino',
+            entidadId: $bovino->id,
+            descripcion: "Se activó el bovino {$bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::resource(
             resource: new BovinoResource($bovino->fresh()->load(['finca', 'raza'])),

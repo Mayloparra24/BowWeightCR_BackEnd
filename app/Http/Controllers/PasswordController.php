@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\BitacoraActividad;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,6 +41,15 @@ class PasswordController extends Controller
             'contrasena_hash' => Hash::make($data['contrasena_nueva']),
             'debe_cambiar_contrasena' => false,
         ]);
+
+        BitacoraActividad::registrar(
+            accion: 'cambiar_contrasena',
+            usuario: $usuario,
+            entidadTipo: 'usuario',
+            entidadId: $usuario->id,
+            descripcion: "Se cambió la contraseña de {$usuario->nombre_completo}",
+            ip: $request->ip(),
+        );
 
         $usuario->tokens()->delete();
         $token = $usuario->createToken('api-token')->plainTextToken;
