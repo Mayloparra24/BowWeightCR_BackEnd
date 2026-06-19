@@ -8,6 +8,7 @@ use App\DTOs\WeightEstimationRequest as WeightEstimationDto;
 use App\Exceptions\WeightEstimationException;
 use App\Http\Requests\EstimateWeightRequest;
 use App\Http\Resources\PesajeResource;
+use App\Models\BitacoraActividad;
 use App\Models\Bovino;
 use App\Models\Fotografia;
 use App\Models\Raza;
@@ -56,6 +57,15 @@ class WeightEstimationController extends Controller
         }
 
         if ($resultado instanceof Fotografia) {
+            BitacoraActividad::registrar(
+                accion: 'estimar',
+                usuario: $request->user(),
+                entidadTipo: 'fotografia',
+                entidadId: $resultado->id,
+                descripcion: "Se recibió fotografía para estimación de peso del bovino {$bovino->identificacionBitacora()}",
+                ip: $request->ip(),
+            );
+
             return ApiResponse::success(
                 data: [
                     'fotografia_id' => $resultado->id,
@@ -67,6 +77,15 @@ class WeightEstimationController extends Controller
         }
 
         /** @var RegistroPesaje $resultado */
+        BitacoraActividad::registrar(
+            accion: 'estimar',
+            usuario: $request->user(),
+            entidadTipo: 'pesaje',
+            entidadId: $resultado->id,
+            descripcion: "Se generó una estimación de peso de {$resultado->peso_final} kg para el bovino {$bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new PesajeResource($resultado->load('bovino')),
             message: 'Peso estimado correctamente.',

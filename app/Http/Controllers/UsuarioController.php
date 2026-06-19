@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\BitacoraActividad;
 use App\Models\Usuario;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -59,6 +60,15 @@ class UsuarioController extends Controller
             'debe_cambiar_contrasena' => true,
         ]);
 
+        BitacoraActividad::registrar(
+            accion: 'crear',
+            usuario: $request->user(),
+            entidadTipo: 'usuario',
+            entidadId: $usuario->id,
+            descripcion: "Se creó el usuario {$usuario->nombre_completo}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new UserResource($usuario),
             message: 'Usuario creado correctamente.',
@@ -106,7 +116,30 @@ class UsuarioController extends Controller
             $updateData['debe_cambiar_contrasena'] = true;
         }
 
+        $estabaActivo = $usuario->esta_activo;
         $usuario->update($updateData);
+
+        if (array_key_exists('esta_activo', $data) && $data['esta_activo'] !== $estabaActivo) {
+            BitacoraActividad::registrar(
+                accion: $data['esta_activo'] ? 'activar' : 'desactivar',
+                usuario: $request->user(),
+                entidadTipo: 'usuario',
+                entidadId: $usuario->id,
+                descripcion: $data['esta_activo']
+                    ? "Se activó el usuario {$usuario->nombre_completo}"
+                    : "Se desactivó el usuario {$usuario->nombre_completo}",
+                ip: $request->ip(),
+            );
+        } else {
+            BitacoraActividad::registrar(
+                accion: 'editar',
+                usuario: $request->user(),
+                entidadTipo: 'usuario',
+                entidadId: $usuario->id,
+                descripcion: "Se editó el usuario {$usuario->nombre_completo}",
+                ip: $request->ip(),
+            );
+        }
 
         return ApiResponse::resource(
             resource: new UserResource($usuario->fresh()),
@@ -128,7 +161,19 @@ class UsuarioController extends Controller
             );
         }
 
+        $nombre = $usuario->nombre_completo;
+        $usuarioId = $usuario->id;
+
         $usuario->delete();
+
+        BitacoraActividad::registrar(
+            accion: 'eliminar',
+            usuario: $request->user(),
+            entidadTipo: 'usuario',
+            entidadId: $usuarioId,
+            descripcion: "Se eliminó el usuario {$nombre}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::success(
             message: 'Usuario eliminado correctamente.',

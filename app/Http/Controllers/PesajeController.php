@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CorrectPesajeRequest;
 use App\Http\Requests\StorePesajeRequest;
 use App\Http\Resources\PesajeResource;
+use App\Models\BitacoraActividad;
 use App\Models\Bovino;
 use App\Models\RegistroPesaje;
 use App\Support\ApiResponse;
@@ -64,6 +65,15 @@ class PesajeController extends Controller
             'registrado_el' => now(),
         ]);
 
+        BitacoraActividad::registrar(
+            accion: 'crear',
+            usuario: $request->user(),
+            entidadTipo: 'pesaje',
+            entidadId: $pesaje->id,
+            descripcion: "Se registró un pesaje manual de {$pesaje->peso_registrado} kg para el bovino {$bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new PesajeResource($pesaje->load('bovino')),
             message: 'Pesaje manual registrado correctamente.',
@@ -87,6 +97,15 @@ class PesajeController extends Controller
             'notas_correccion' => $request->validated('notas_correccion'),
             'es_correccion_manual' => true,
         ]);
+
+        BitacoraActividad::registrar(
+            accion: 'corregir',
+            usuario: $request->user(),
+            entidadTipo: 'pesaje',
+            entidadId: $pesaje->id,
+            descripcion: "Se corrigió el pesaje {$pesaje->id} a {$pesaje->peso_registrado} kg para el bovino {$pesaje->bovino->identificacionBitacora()}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::resource(
             resource: new PesajeResource($pesaje->fresh()),
