@@ -12,6 +12,8 @@ class Asignacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'asignaciones';
+
     protected $fillable = [
         'usuario_id',
         'finca_id',

@@ -42,7 +42,7 @@ class FincaController extends Controller
 
         if ($usuario->esAdministrador()) {
             $fincas = Finca::with('propietario')->get();
-        } elseif ($usuario->esVeterinario() || $usuario->esAsistente()) {
+        } elseif ($usuario->esVeterinario()) {
             $fincas = Finca::whereHas('asignaciones', function ($query) use ($usuario) {
                 $query->where('usuario_id', $usuario->id)
                     ->where('esta_activa', true);
@@ -51,6 +51,13 @@ class FincaController extends Controller
             $fincas = Finca::where('propietario_id', $usuario->id)
                 ->with('propietario')
                 ->get();
+
+            if ($usuario->esAsistente()) {
+                $asignadas = Finca::whereHas('asignaciones', function ($query) use ($usuario) {
+                    $query->where('usuario_id', $usuario->id)->where('esta_activa', true);
+                })->with('propietario')->get();
+                $fincas = $fincas->merge($asignadas)->unique('id');
+            }
         }
 
         return ApiResponse::resource(
