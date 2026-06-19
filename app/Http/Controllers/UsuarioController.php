@@ -150,7 +150,7 @@ class UsuarioController extends Controller
     #[\Knuckles\Scribe\Attributes\Response(
         content: ['success' => true, 'message' => 'Usuario eliminado correctamente.', 'data' => null], status: 200,
     )]
-    public function destroy(Usuario $usuario): JsonResponse
+    public function destroy(Request $request, Usuario $usuario): JsonResponse
     {
         $this->authorize('administrar-usuarios');
 
