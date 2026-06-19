@@ -60,4 +60,6 @@ R2_USE_PATH_STYLE_ENDPOINT=${R2_USE_PATH_STYLE_ENDPOINT:-true}
 VITE_APP_NAME="${APP_NAME}"
 EOF
 
-PHPRC=/app/php.ini php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+DEFAULT_SCAN_DIR=$(php --ini 2>/dev/null | awk -F': ' '/Scan for additional .ini files in:/{print $2}')
+export PHP_INI_SCAN_DIR="${DEFAULT_SCAN_DIR:+${DEFAULT_SCAN_DIR}:}/app/php-overrides"
+exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
