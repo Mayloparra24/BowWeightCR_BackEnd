@@ -60,4 +60,4 @@ R2_USE_PATH_STYLE_ENDPOINT=${R2_USE_PATH_STYLE_ENDPOINT:-true}
 VITE_APP_NAME="${APP_NAME}"
 EOF
 
-php -c php.ini artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+PHPRC=/app/php.ini php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
