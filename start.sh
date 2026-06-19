@@ -60,4 +60,5 @@ R2_USE_PATH_STYLE_ENDPOINT=${R2_USE_PATH_STYLE_ENDPOINT:-true}
 VITE_APP_NAME="${APP_NAME}"
 EOF
 
-exec php -c /app/php.ini -S "0.0.0.0:${PORT:-8080}" -t /app/public /app/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php
+cd /app/public || exit 1
+exec php -c /app/php.ini -S "0.0.0.0:${PORT:-8080}" /app/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php
