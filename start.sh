@@ -60,4 +60,4 @@ R2_USE_PATH_STYLE_ENDPOINT=${R2_USE_PATH_STYLE_ENDPOINT:-true}
 VITE_APP_NAME="${APP_NAME}"
 EOF
 
-php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+php -d upload_max_filesize=20M -d post_max_size=25M artisan serve --host=0.0.0.0 --port=${PORT:-8080}
