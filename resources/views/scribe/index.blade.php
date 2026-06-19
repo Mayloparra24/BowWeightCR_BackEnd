@@ -131,14 +131,17 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-pesajes-estimar">
                                 <a href="#endpoints-POSTapi-pesajes-estimar">POST api/pesajes/estimar</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-fincas--finca--veterinarios">
-                                <a href="#endpoints-GETapi-fincas--finca--veterinarios">GET api/fincas/{finca}/veterinarios</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-fincas--finca--usuarios--rol-">
+                                <a href="#endpoints-GETapi-fincas--finca--usuarios--rol-">GET api/fincas/{finca}/usuarios/{rol}</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-fincas--finca--veterinarios">
-                                <a href="#endpoints-POSTapi-fincas--finca--veterinarios">POST api/fincas/{finca}/veterinarios</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-fincas--finca--usuarios--rol-">
+                                <a href="#endpoints-POSTapi-fincas--finca--usuarios--rol-">POST api/fincas/{finca}/usuarios/{rol}</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-fincas--finca--veterinarios--asignacion-">
-                                <a href="#endpoints-DELETEapi-fincas--finca--veterinarios--asignacion-">DELETE api/fincas/{finca}/veterinarios/{asignacion}</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-fincas--finca--usuarios--asignacion-">
+                                <a href="#endpoints-DELETEapi-fincas--finca--usuarios--asignacion-">DELETE api/fincas/{finca}/usuarios/{asignacion}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-usuarios-disponibles--rol-">
+                                <a href="#endpoints-GETapi-usuarios-disponibles--rol-">GET api/usuarios-disponibles/{rol}</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-razas">
                                 <a href="#endpoints-GETapi-razas">GET api/razas</a>
@@ -172,7 +175,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 18, 2026</li>
+        <li>Last updated: June 19, 2026</li>
     </ul>
 </div>
 
@@ -1323,7 +1326,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"ubicacion\": \"n\",
     \"canton\": \"g\",
     \"provincia\": \"z\",
-    \"esta_activa\": false
+    \"esta_activa\": true
 }"
 </code></pre></div>
 
@@ -1343,7 +1346,7 @@ let body = {
     "ubicacion": "n",
     "canton": "g",
     "provincia": "z",
-    "esta_activa": false
+    "esta_activa": true
 };
 
 fetch(url, {
@@ -1539,7 +1542,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -1845,7 +1848,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"numero_arete\": \"n\",
     \"nombre_animal\": \"g\",
     \"sexo\": \"hembra\",
-    \"fecha_nacimiento\": \"2026-06-18T03:59:28\",
+    \"fecha_nacimiento\": \"2026-06-19T09:10:07\",
     \"notas\": \"architecto\"
 }"
 </code></pre></div>
@@ -1867,7 +1870,7 @@ let body = {
     "numero_arete": "n",
     "nombre_animal": "g",
     "sexo": "hembra",
-    "fecha_nacimiento": "2026-06-18T03:59:28",
+    "fecha_nacimiento": "2026-06-19T09:10:07",
     "notas": "architecto"
 };
 
@@ -2052,10 +2055,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha_nacimiento"                data-endpoint="POSTapi-bovinos"
-               value="2026-06-18T03:59:28"
+               value="2026-06-19T09:10:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-18T03:59:28</code></p>
+<p>Must be a valid date. Example: <code>2026-06-19T09:10:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>notas</code></b>&nbsp;&nbsp;
@@ -2244,8 +2247,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"nombre_animal\": \"b\",
-    \"sexo\": \"macho\",
-    \"fecha_nacimiento\": \"2026-06-18T03:59:28\",
+    \"sexo\": \"hembra\",
+    \"fecha_nacimiento\": \"2026-06-19T09:10:07\",
     \"notas\": \"architecto\"
 }"
 </code></pre></div>
@@ -2263,8 +2266,8 @@ const headers = {
 
 let body = {
     "nombre_animal": "b",
-    "sexo": "macho",
-    "fecha_nacimiento": "2026-06-18T03:59:28",
+    "sexo": "hembra",
+    "fecha_nacimiento": "2026-06-19T09:10:07",
     "notas": "architecto"
 };
 
@@ -2427,10 +2430,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="sexo"                data-endpoint="PUTapi-bovinos--id-"
-               value="macho"
+               value="hembra"
                data-component="body">
     <br>
-<p>Example: <code>macho</code></p>
+<p>Example: <code>hembra</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>macho</code></li> <li><code>hembra</code></li></ul>
         </div>
@@ -2441,10 +2444,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="fecha_nacimiento"                data-endpoint="PUTapi-bovinos--id-"
-               value="2026-06-18T03:59:28"
+               value="2026-06-19T09:10:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-18T03:59:28</code></p>
+<p>Must be a valid date. Example: <code>2026-06-19T09:10:07</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>notas</code></b>&nbsp;&nbsp;
@@ -3438,7 +3441,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "bovino_id=architecto"\
     --form "raza_id=architecto"\
     --form "modo_offline="\
-    --form "foto=@C:\Users\a4942\AppData\Local\Temp\phpA2DC.tmp" </code></pre></div>
+    --form "foto=@C:\Users\a4942\AppData\Local\Temp\phpFDC9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3587,7 +3590,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 10240 kilobytes. Example: <code>C:\Users\a4942\AppData\Local\Temp\phpA2DC.tmp</code></p>
+<p>Must be an image. Must not be greater than 10240 kilobytes. Example: <code>C:\Users\a4942\AppData\Local\Temp\phpFDC9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>raza_id</code></b>&nbsp;&nbsp;
@@ -3625,27 +3628,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="endpoints-GETapi-fincas--finca--veterinarios">GET api/fincas/{finca}/veterinarios</h2>
+                    <h2 id="endpoints-GETapi-fincas--finca--usuarios--rol-">GET api/fincas/{finca}/usuarios/{rol}</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-fincas--finca--veterinarios">
+<span id="example-requests-GETapi-fincas--finca--usuarios--rol-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/fincas/16/veterinarios" \
+    --get "http://localhost/api/fincas/16/usuarios/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/fincas/16/veterinarios"
+    "http://localhost/api/fincas/16/usuarios/architecto"
 );
 
 const headers = {
@@ -3661,70 +3664,45 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-fincas--finca--veterinarios">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;message&quot;: &quot;Veterinarios asignados obtenidos correctamente.&quot;,
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;veterinario_id&quot;: 2,
-            &quot;finca_id&quot;: 1,
-            &quot;esta_activa&quot;: true,
-            &quot;asignado_el&quot;: &quot;2026-06-17T00:00:00+00:00&quot;,
-            &quot;veterinario&quot;: {
-                &quot;id&quot;: 2,
-                &quot;nombre_completo&quot;: &quot;Dr. Roberto Solano&quot;,
-                &quot;correo_electronico&quot;: &quot;veterinario@bovweight.com&quot;,
-                &quot;rol&quot;: &quot;veterinario&quot;
-            }
-        }
-    ]
-}</code>
- </pre>
+<span id="example-responses-GETapi-fincas--finca--usuarios--rol-">
     </span>
-<span id="execution-results-GETapi-fincas--finca--veterinarios" hidden>
+<span id="execution-results-GETapi-fincas--finca--usuarios--rol-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-fincas--finca--veterinarios"></span>:
+                id="execution-response-status-GETapi-fincas--finca--usuarios--rol-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-fincas--finca--veterinarios"
+    <pre class="json"><code id="execution-response-content-GETapi-fincas--finca--usuarios--rol-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-fincas--finca--veterinarios" hidden>
+<span id="execution-error-GETapi-fincas--finca--usuarios--rol-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-fincas--finca--veterinarios">
+    <pre><code id="execution-error-message-GETapi-fincas--finca--usuarios--rol-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-fincas--finca--veterinarios" data-method="GET"
-      data-path="api/fincas/{finca}/veterinarios"
+<form id="form-GETapi-fincas--finca--usuarios--rol-" data-method="GET"
+      data-path="api/fincas/{finca}/usuarios/{rol}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-fincas--finca--veterinarios', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-fincas--finca--usuarios--rol-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-fincas--finca--veterinarios"
-                    onclick="tryItOut('GETapi-fincas--finca--veterinarios');">Try it out ⚡
+                    id="btn-tryout-GETapi-fincas--finca--usuarios--rol-"
+                    onclick="tryItOut('GETapi-fincas--finca--usuarios--rol-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-fincas--finca--veterinarios"
-                    onclick="cancelTryOut('GETapi-fincas--finca--veterinarios');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-fincas--finca--usuarios--rol-"
+                    onclick="cancelTryOut('GETapi-fincas--finca--usuarios--rol-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-fincas--finca--veterinarios"
+                    id="btn-executetryout-GETapi-fincas--finca--usuarios--rol-"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -3732,7 +3710,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/fincas/{finca}/veterinarios</code></b>
+            <b><code>api/fincas/{finca}/usuarios/{rol}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -3741,7 +3719,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-fincas--finca--veterinarios"
+                              name="Content-Type"                data-endpoint="GETapi-fincas--finca--usuarios--rol-"
                value="application/json"
                data-component="header">
     <br>
@@ -3753,7 +3731,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-fincas--finca--veterinarios"
+                              name="Accept"                data-endpoint="GETapi-fincas--finca--usuarios--rol-"
                value="application/json"
                data-component="header">
     <br>
@@ -3766,39 +3744,51 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="finca"                data-endpoint="GETapi-fincas--finca--veterinarios"
+               step="any"               name="finca"                data-endpoint="GETapi-fincas--finca--usuarios--rol-"
                value="16"
                data-component="url">
     <br>
 <p>The finca. Example: <code>16</code></p>
             </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rol</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="rol"                data-endpoint="GETapi-fincas--finca--usuarios--rol-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
                     </form>
 
-                    <h2 id="endpoints-POSTapi-fincas--finca--veterinarios">POST api/fincas/{finca}/veterinarios</h2>
+                    <h2 id="endpoints-POSTapi-fincas--finca--usuarios--rol-">POST api/fincas/{finca}/usuarios/{rol}</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-POSTapi-fincas--finca--veterinarios">
+<span id="example-requests-POSTapi-fincas--finca--usuarios--rol-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/fincas/16/veterinarios" \
+    "http://localhost/api/fincas/16/usuarios/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"veterinario_id\": \"architecto\"
+    \"usuario_id\": \"architecto\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/fincas/16/veterinarios"
+    "http://localhost/api/fincas/16/usuarios/architecto"
 );
 
 const headers = {
@@ -3807,7 +3797,7 @@ const headers = {
 };
 
 let body = {
-    "veterinario_id": "architecto"
+    "usuario_id": "architecto"
 };
 
 fetch(url, {
@@ -3818,68 +3808,45 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-POSTapi-fincas--finca--veterinarios">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;message&quot;: &quot;Veterinario asignado correctamente.&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 1,
-        &quot;veterinario_id&quot;: 2,
-        &quot;finca_id&quot;: 1,
-        &quot;esta_activa&quot;: true,
-        &quot;asignado_el&quot;: &quot;2026-06-17T00:00:00+00:00&quot;,
-        &quot;veterinario&quot;: {
-            &quot;id&quot;: 2,
-            &quot;nombre_completo&quot;: &quot;Dr. Roberto Solano&quot;,
-            &quot;correo_electronico&quot;: &quot;veterinario@bovweight.com&quot;,
-            &quot;rol&quot;: &quot;veterinario&quot;
-        }
-    }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTapi-fincas--finca--veterinarios" hidden>
+<span id="example-responses-POSTapi-fincas--finca--usuarios--rol-">
+</span>
+<span id="execution-results-POSTapi-fincas--finca--usuarios--rol-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-fincas--finca--veterinarios"></span>:
+                id="execution-response-status-POSTapi-fincas--finca--usuarios--rol-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-fincas--finca--veterinarios"
+    <pre class="json"><code id="execution-response-content-POSTapi-fincas--finca--usuarios--rol-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-fincas--finca--veterinarios" hidden>
+<span id="execution-error-POSTapi-fincas--finca--usuarios--rol-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-fincas--finca--veterinarios">
+    <pre><code id="execution-error-message-POSTapi-fincas--finca--usuarios--rol-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-fincas--finca--veterinarios" data-method="POST"
-      data-path="api/fincas/{finca}/veterinarios"
+<form id="form-POSTapi-fincas--finca--usuarios--rol-" data-method="POST"
+      data-path="api/fincas/{finca}/usuarios/{rol}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-fincas--finca--veterinarios', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-fincas--finca--usuarios--rol-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-fincas--finca--veterinarios"
-                    onclick="tryItOut('POSTapi-fincas--finca--veterinarios');">Try it out ⚡
+                    id="btn-tryout-POSTapi-fincas--finca--usuarios--rol-"
+                    onclick="tryItOut('POSTapi-fincas--finca--usuarios--rol-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-fincas--finca--veterinarios"
-                    onclick="cancelTryOut('POSTapi-fincas--finca--veterinarios');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-fincas--finca--usuarios--rol-"
+                    onclick="cancelTryOut('POSTapi-fincas--finca--usuarios--rol-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-fincas--finca--veterinarios"
+                    id="btn-executetryout-POSTapi-fincas--finca--usuarios--rol-"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -3887,7 +3854,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/fincas/{finca}/veterinarios</code></b>
+            <b><code>api/fincas/{finca}/usuarios/{rol}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -3896,7 +3863,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-fincas--finca--veterinarios"
+                              name="Content-Type"                data-endpoint="POSTapi-fincas--finca--usuarios--rol-"
                value="application/json"
                data-component="header">
     <br>
@@ -3908,7 +3875,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-fincas--finca--veterinarios"
+                              name="Accept"                data-endpoint="POSTapi-fincas--finca--usuarios--rol-"
                value="application/json"
                data-component="header">
     <br>
@@ -3921,20 +3888,32 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="finca"                data-endpoint="POSTapi-fincas--finca--veterinarios"
+               step="any"               name="finca"                data-endpoint="POSTapi-fincas--finca--usuarios--rol-"
                value="16"
                data-component="url">
     <br>
 <p>The finca. Example: <code>16</code></p>
             </div>
-                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>veterinario_id</code></b>&nbsp;&nbsp;
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rol</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="veterinario_id"                data-endpoint="POSTapi-fincas--finca--veterinarios"
+                              name="rol"                data-endpoint="POSTapi-fincas--finca--usuarios--rol-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>usuario_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="usuario_id"                data-endpoint="POSTapi-fincas--finca--usuarios--rol-"
                value="architecto"
                data-component="body">
     <br>
@@ -3942,27 +3921,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="endpoints-DELETEapi-fincas--finca--veterinarios--asignacion-">DELETE api/fincas/{finca}/veterinarios/{asignacion}</h2>
+                    <h2 id="endpoints-DELETEapi-fincas--finca--usuarios--asignacion-">DELETE api/fincas/{finca}/usuarios/{asignacion}</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-DELETEapi-fincas--finca--veterinarios--asignacion-">
+<span id="example-requests-DELETEapi-fincas--finca--usuarios--asignacion-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/fincas/16/veterinarios/architecto" \
+    "http://localhost/api/fincas/16/usuarios/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/fincas/16/veterinarios/architecto"
+    "http://localhost/api/fincas/16/usuarios/architecto"
 );
 
 const headers = {
@@ -3978,56 +3957,45 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-DELETEapi-fincas--finca--veterinarios--asignacion-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;message&quot;: &quot;Veterinario removido de la finca correctamente.&quot;,
-    &quot;data&quot;: null
-}</code>
- </pre>
-    </span>
-<span id="execution-results-DELETEapi-fincas--finca--veterinarios--asignacion-" hidden>
+<span id="example-responses-DELETEapi-fincas--finca--usuarios--asignacion-">
+</span>
+<span id="execution-results-DELETEapi-fincas--finca--usuarios--asignacion-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-DELETEapi-fincas--finca--veterinarios--asignacion-"></span>:
+                id="execution-response-status-DELETEapi-fincas--finca--usuarios--asignacion-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-DELETEapi-fincas--finca--veterinarios--asignacion-"
+    <pre class="json"><code id="execution-response-content-DELETEapi-fincas--finca--usuarios--asignacion-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-DELETEapi-fincas--finca--veterinarios--asignacion-" hidden>
+<span id="execution-error-DELETEapi-fincas--finca--usuarios--asignacion-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-DELETEapi-fincas--finca--veterinarios--asignacion-">
+    <pre><code id="execution-error-message-DELETEapi-fincas--finca--usuarios--asignacion-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-DELETEapi-fincas--finca--veterinarios--asignacion-" data-method="DELETE"
-      data-path="api/fincas/{finca}/veterinarios/{asignacion}"
+<form id="form-DELETEapi-fincas--finca--usuarios--asignacion-" data-method="DELETE"
+      data-path="api/fincas/{finca}/usuarios/{asignacion}"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-fincas--finca--veterinarios--asignacion-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-fincas--finca--usuarios--asignacion-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-DELETEapi-fincas--finca--veterinarios--asignacion-"
-                    onclick="tryItOut('DELETEapi-fincas--finca--veterinarios--asignacion-');">Try it out ⚡
+                    id="btn-tryout-DELETEapi-fincas--finca--usuarios--asignacion-"
+                    onclick="tryItOut('DELETEapi-fincas--finca--usuarios--asignacion-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-DELETEapi-fincas--finca--veterinarios--asignacion-"
-                    onclick="cancelTryOut('DELETEapi-fincas--finca--veterinarios--asignacion-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-DELETEapi-fincas--finca--usuarios--asignacion-"
+                    onclick="cancelTryOut('DELETEapi-fincas--finca--usuarios--asignacion-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-DELETEapi-fincas--finca--veterinarios--asignacion-"
+                    id="btn-executetryout-DELETEapi-fincas--finca--usuarios--asignacion-"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -4035,7 +4003,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-red">DELETE</small>
-            <b><code>api/fincas/{finca}/veterinarios/{asignacion}</code></b>
+            <b><code>api/fincas/{finca}/usuarios/{asignacion}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -4044,7 +4012,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="DELETEapi-fincas--finca--veterinarios--asignacion-"
+                              name="Content-Type"                data-endpoint="DELETEapi-fincas--finca--usuarios--asignacion-"
                value="application/json"
                data-component="header">
     <br>
@@ -4056,7 +4024,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="DELETEapi-fincas--finca--veterinarios--asignacion-"
+                              name="Accept"                data-endpoint="DELETEapi-fincas--finca--usuarios--asignacion-"
                value="application/json"
                data-component="header">
     <br>
@@ -4069,7 +4037,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="finca"                data-endpoint="DELETEapi-fincas--finca--veterinarios--asignacion-"
+               step="any"               name="finca"                data-endpoint="DELETEapi-fincas--finca--usuarios--asignacion-"
                value="16"
                data-component="url">
     <br>
@@ -4081,7 +4049,131 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="asignacion"                data-endpoint="DELETEapi-fincas--finca--veterinarios--asignacion-"
+                              name="asignacion"                data-endpoint="DELETEapi-fincas--finca--usuarios--asignacion-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-usuarios-disponibles--rol-">GET api/usuarios-disponibles/{rol}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-usuarios-disponibles--rol-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/usuarios-disponibles/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/usuarios-disponibles/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-usuarios-disponibles--rol-">
+    </span>
+<span id="execution-results-GETapi-usuarios-disponibles--rol-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-usuarios-disponibles--rol-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-usuarios-disponibles--rol-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-usuarios-disponibles--rol-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-usuarios-disponibles--rol-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-usuarios-disponibles--rol-" data-method="GET"
+      data-path="api/usuarios-disponibles/{rol}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-usuarios-disponibles--rol-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-usuarios-disponibles--rol-"
+                    onclick="tryItOut('GETapi-usuarios-disponibles--rol-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-usuarios-disponibles--rol-"
+                    onclick="cancelTryOut('GETapi-usuarios-disponibles--rol-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-usuarios-disponibles--rol-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/usuarios-disponibles/{rol}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-usuarios-disponibles--rol-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-usuarios-disponibles--rol-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rol</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="rol"                data-endpoint="GETapi-usuarios-disponibles--rol-"
                value="architecto"
                data-component="url">
     <br>
@@ -4762,7 +4854,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"correo_electronico\": \"zbailey@example.net\",
     \"contrasena\": \"iyvdljnikhwaykcmyuwpwlvqwr\",
     \"rol\": \"ganadero\",
-    \"esta_activo\": true
+    \"esta_activo\": false
 }"
 </code></pre></div>
 
@@ -4782,7 +4874,7 @@ let body = {
     "correo_electronico": "zbailey@example.net",
     "contrasena": "iyvdljnikhwaykcmyuwpwlvqwr",
     "rol": "ganadero",
-    "esta_activo": true
+    "esta_activo": false
 };
 
 fetch(url, {
@@ -4974,7 +5066,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
