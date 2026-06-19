@@ -33,8 +33,6 @@ class AsignacionController extends Controller
         return ApiResponse::success(data: $usuarios);
     }
 
-
-{
     public function index(Request $request, int $fincaId, string $rol): JsonResponse
     {
         $finca = Finca::findOrFail($fincaId);

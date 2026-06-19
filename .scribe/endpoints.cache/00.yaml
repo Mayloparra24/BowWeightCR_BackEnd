@@ -473,7 +473,7 @@ endpoints:
         name: esta_activa
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -484,7 +484,7 @@ endpoints:
       ubicacion: 'n'
       canton: g
       provincia: z
-      esta_activa: false
+      esta_activa: true
     fileParameters: []
     responses:
       -
@@ -669,7 +669,7 @@ endpoints:
         name: fecha_nacimiento
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-18T03:59:28'
+        example: '2026-06-19T09:10:07'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -692,7 +692,7 @@ endpoints:
       numero_arete: 'n'
       nombre_animal: g
       sexo: hembra
-      fecha_nacimiento: '2026-06-18T03:59:28'
+      fecha_nacimiento: '2026-06-19T09:10:07'
       notas: architecto
     fileParameters: []
     responses:
@@ -819,7 +819,7 @@ endpoints:
         name: sexo
         description: ''
         required: false
-        example: macho
+        example: hembra
         type: string
         enumValues:
           - macho
@@ -832,7 +832,7 @@ endpoints:
         name: fecha_nacimiento
         description: 'Must be a valid date.'
         required: false
-        example: '2026-06-18T03:59:28'
+        example: '2026-06-19T09:10:07'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -851,8 +851,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       nombre_animal: b
-      sexo: macho
-      fecha_nacimiento: '2026-06-18T03:59:28'
+      sexo: hembra
+      fecha_nacimiento: '2026-06-19T09:10:07'
       notas: architecto
     fileParameters: []
     responses:
@@ -1310,7 +1310,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/fincas/{finca}/veterinarios'
+    uri: 'api/fincas/{finca}/usuarios/{rol}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -1336,20 +1336,26 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      rol:
+        custom: []
+        name: rol
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
       finca: 16
+      rol: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: '{"success":true,"message":"Veterinarios asignados obtenidos correctamente.","data":[{"id":1,"veterinario_id":2,"finca_id":1,"esta_activa":true,"asignado_el":"2026-06-17T00:00:00+00:00","veterinario":{"id":2,"nombre_completo":"Dr. Roberto Solano","correo_electronico":"veterinario@bovweight.com","rol":"veterinario"}}]}'
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -1359,7 +1365,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: 'api/fincas/{finca}/veterinarios'
+    uri: 'api/fincas/{finca}/usuarios/{rol}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -1385,14 +1391,26 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      rol:
+        custom: []
+        name: rol
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
       finca: 16
+      rol: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      veterinario_id:
+      usuario_id:
         custom: []
-        name: veterinario_id
+        name: usuario_id
         description: 'Must match an existing stored value.'
         required: true
         example: architecto
@@ -1402,15 +1420,9 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      veterinario_id: architecto
+      usuario_id: architecto
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: '{"success":true,"message":"Veterinario asignado correctamente.","data":{"id":1,"veterinario_id":2,"finca_id":1,"esta_activa":true,"asignado_el":"2026-06-17T00:00:00+00:00","veterinario":{"id":2,"nombre_completo":"Dr. Roberto Solano","correo_electronico":"veterinario@bovweight.com","rol":"veterinario"}}}'
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -1420,7 +1432,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/fincas/{finca}/veterinarios/{asignacion}'
+    uri: 'api/fincas/{finca}/usuarios/{asignacion}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -1465,13 +1477,50 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/usuarios-disponibles/{rol}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      rol:
         custom: []
-        status: 200
-        content: '{"success":true,"message":"Veterinario removido de la finca correctamente.","data":null}'
-        headers: []
+        name: rol
         description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      rol: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -1790,7 +1839,7 @@ endpoints:
         name: esta_activo
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -1801,7 +1850,7 @@ endpoints:
       correo_electronico: zbailey@example.net
       contrasena: iyvdljnikhwaykcmyuwpwlvqwr
       rol: ganadero
-      esta_activo: true
+      esta_activo: false
     fileParameters: []
     responses:
       -
