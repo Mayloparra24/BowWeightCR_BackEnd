@@ -24,17 +24,19 @@ class BovinoController extends Controller
     {
         $usuario = $request->user();
 
+        $with = ['finca', 'raza', 'pesajes' => fn ($q) => $q->orderBy('registrado_el', 'desc')];
+
         if ($usuario->esAdministrador()) {
-            $bovinos = Bovino::with(['finca', 'raza'])->get();
-        } elseif ($usuario->esVeterinario()) {
+            $bovinos = Bovino::with($with)->get();
+        } elseif ($usuario->esVeterinario() || $usuario->esAsistente()) {
             $bovinos = Bovino::whereHas('finca.asignaciones', function ($query) use ($usuario) {
-                $query->where('veterinario_id', $usuario->id)
+                $query->where('usuario_id', $usuario->id)
                     ->where('esta_activa', true);
-            })->with(['finca', 'raza'])->get();
+            })->with($with)->get();
         } else {
             $bovinos = Bovino::whereHas('finca', function ($query) use ($usuario) {
                 $query->where('propietario_id', $usuario->id);
-            })->with(['finca', 'raza'])->get();
+            })->with($with)->get();
         }
 
         return ApiResponse::resource(
@@ -113,6 +115,13 @@ class BovinoController extends Controller
     public function update(Request $request, Bovino $bovino): JsonResponse
     {
         $this->authorize('update', $bovino);
+
+        if (! $bovino->estaActivo()) {
+            return ApiResponse::error(
+                message: 'No se puede editar un bovino inactivo.',
+                status: 422,
+            );
+        }
 
         $data = $request->validate([
             'raza_id'          => ['sometimes', 'exists:razas,id'],

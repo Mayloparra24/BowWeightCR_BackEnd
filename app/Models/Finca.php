@@ -39,11 +39,6 @@ class Finca extends Model
         return $this->hasMany(Bovino::class);
     }
 
-    public function veterinarios(): HasMany
-    {
-        return $this->hasMany(AsignacionVeterinario::class);
-    }
-
     public function recordatorios(): HasMany
     {
         return $this->hasMany(Recordatorio::class);
@@ -51,6 +46,6 @@ class Finca extends Model
 
     public function asignaciones(): HasMany
     {
-    return $this->hasMany(AsignacionVeterinario::class);    
+        return $this->hasMany(Asignacion::class);
     }
 }

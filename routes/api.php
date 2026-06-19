@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AsignacionVeterinarioController;
+use App\Http\Controllers\AsignacionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\BovinoController;
@@ -35,10 +35,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/pesajes/{pesaje}/corregir', [PesajeController::class, 'correct']);
     Route::post('/pesajes/estimar', [WeightEstimationController::class, 'estimate'])->middleware('throttle:estimacion-ia');
 
-    // Asignaciones de veterinarios
-    Route::get('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'index']);
-    Route::post('fincas/{finca}/veterinarios', [AsignacionVeterinarioController::class, 'store']);
-    Route::delete('fincas/{finca}/veterinarios/{asignacion}', [AsignacionVeterinarioController::class, 'destroy']);
+    // Asignaciones de veterinarios y asistentes
+    Route::get('fincas/{finca}/usuarios/{rol}', [AsignacionController::class, 'index']);
+    Route::post('fincas/{finca}/usuarios/{rol}', [AsignacionController::class, 'store']);
+    Route::delete('fincas/{finca}/usuarios/{asignacion}', [AsignacionController::class, 'destroy']);
+
+    // Usuarios disponibles para asignar por rol
+    Route::get('usuarios-disponibles/{rol}', [AsignacionController::class, 'usuariosDisponibles']);
 
     // Razas
     Route::get('razas', [RazaController::class, 'index']);
