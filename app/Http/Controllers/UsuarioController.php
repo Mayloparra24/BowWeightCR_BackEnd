@@ -104,6 +104,13 @@ class UsuarioController extends Controller
             'esta_activo' => ['sometimes', 'boolean'],
         ]);
 
+        if ($usuario->id === $request->user()->id && array_key_exists('esta_activo', $data) && $data['esta_activo'] === false) {
+            return ApiResponse::error(
+                message: 'No podés desactivar tu propio usuario.',
+                status: 422,
+            );
+        }
+
         $updateData = [
             'nombre_completo' => $data['nombre_completo'] ?? $usuario->nombre_completo,
             'correo_electronico' => $data['correo_electronico'] ?? $usuario->correo_electronico,

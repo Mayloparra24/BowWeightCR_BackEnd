@@ -42,9 +42,9 @@ class FincaController extends Controller
 
         if ($usuario->esAdministrador()) {
             $fincas = Finca::with('propietario')->get();
-        } elseif ($usuario->esVeterinario()) {
+        } elseif ($usuario->esVeterinario() || $usuario->esAsistente()) {
             $fincas = Finca::whereHas('asignaciones', function ($query) use ($usuario) {
-                $query->where('veterinario_id', $usuario->id)
+                $query->where('usuario_id', $usuario->id)
                     ->where('esta_activa', true);
             })->with('propietario')->get();
         } else {

@@ -1,12 +1,12 @@
 <?php
 namespace App\Providers;
 
-use App\Models\AsignacionVeterinario;
+use App\Models\Asignacion;
 use App\Models\Bovino;
 use App\Models\Finca;
 use App\Models\RegistroPesaje;
 use App\Models\Usuario;
-use App\Policies\AsignacionVeterinarioPolicy;
+use App\Policies\AsignacionPolicy;
 use App\Policies\BovinoPolicy;
 use App\Policies\FincaPolicy;
 use App\Policies\PesajePolicy;
@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Finca::class, FincaPolicy::class);
         Gate::policy(Bovino::class, BovinoPolicy::class);
-        Gate::policy(AsignacionVeterinario::class, AsignacionVeterinarioPolicy::class);
+        Gate::policy(Asignacion::class, AsignacionPolicy::class);
         Gate::policy(RegistroPesaje::class, PesajePolicy::class);
 
         Gate::define('administrar-usuarios', function (Usuario $usuario) {
