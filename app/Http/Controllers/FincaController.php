@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FincaResource;
+use App\Models\BitacoraActividad;
 use App\Models\Finca;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -97,6 +98,15 @@ class FincaController extends Controller
             'propietario_id' => $request->user()->id,
         ]);
 
+        BitacoraActividad::registrar(
+            accion: 'crear',
+            usuario: $request->user(),
+            entidadTipo: 'finca',
+            entidadId: $finca->id,
+            descripcion: "Se creó la finca {$finca->nombre_finca}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new FincaResource($finca->load('propietario')),
             message: 'Finca registrada correctamente.',
@@ -151,6 +161,15 @@ class FincaController extends Controller
 
         $finca->update($data);
 
+        BitacoraActividad::registrar(
+            accion: 'editar',
+            usuario: $request->user(),
+            entidadTipo: 'finca',
+            entidadId: $finca->id,
+            descripcion: "Se editó la finca {$finca->nombre_finca}",
+            ip: $request->ip(),
+        );
+
         return ApiResponse::resource(
             resource: new FincaResource($finca->fresh()->load('propietario')),
             message: 'Finca actualizada correctamente.',
@@ -165,7 +184,19 @@ class FincaController extends Controller
     {
         $this->authorize('delete', $finca);
 
+        $nombre = $finca->nombre_finca;
+        $fincaId = $finca->id;
+
         $finca->delete();
+
+        BitacoraActividad::registrar(
+            accion: 'eliminar',
+            usuario: $request->user(),
+            entidadTipo: 'finca',
+            entidadId: $fincaId,
+            descripcion: "Se eliminó la finca {$nombre}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::success(
             message: 'Finca eliminada correctamente.',

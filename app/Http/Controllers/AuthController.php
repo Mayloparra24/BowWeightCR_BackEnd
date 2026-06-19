@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Models\BitacoraActividad;
 use App\Models\Usuario;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -46,6 +47,14 @@ class AuthController extends Controller
         $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();
 
         if (! $usuario || ! Hash::check($request->contrasena, $usuario->contrasena_hash)) {
+            BitacoraActividad::registrar(
+                accion: 'login_fallido',
+                usuario: $usuario,
+                entidadTipo: 'sesion',
+                descripcion: "Intento de inicio de sesión fallido para {$request->correo_electronico}",
+                ip: $request->ip(),
+            );
+
             return ApiResponse::error(
                 message: 'Credenciales incorrectas.',
                 status: 401,
@@ -53,6 +62,14 @@ class AuthController extends Controller
         }
 
         if (! $usuario->esta_activo) {
+            BitacoraActividad::registrar(
+                accion: 'login_fallido',
+                usuario: $usuario,
+                entidadTipo: 'sesion',
+                descripcion: "Intento de inicio de sesión fallido: cuenta desactivada de {$usuario->nombre_completo}",
+                ip: $request->ip(),
+            );
+
             return ApiResponse::error(
                 message: 'Tu cuenta está desactivada. Contactá al administrador.',
                 status: 403,
@@ -60,6 +77,15 @@ class AuthController extends Controller
         }
 
         $token = $usuario->createToken('api-token')->plainTextToken;
+
+        BitacoraActividad::registrar(
+            accion: 'login',
+            usuario: $usuario,
+            entidadTipo: 'sesion',
+            entidadId: $usuario->id,
+            descripcion: "Inicio de sesión de {$usuario->nombre_completo}",
+            ip: $request->ip(),
+        );
 
         return ApiResponse::success(
             data: [
@@ -76,7 +102,18 @@ class AuthController extends Controller
     )]
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $usuario = $request->user();
+
+        BitacoraActividad::registrar(
+            accion: 'logout',
+            usuario: $usuario,
+            entidadTipo: 'sesion',
+            entidadId: $usuario->id,
+            descripcion: "Cierre de sesión de {$usuario->nombre_completo}",
+            ip: $request->ip(),
+        );
+
+        $usuario->currentAccessToken()->delete();
 
         return ApiResponse::success(
             message: 'Sesión cerrada correctamente.',

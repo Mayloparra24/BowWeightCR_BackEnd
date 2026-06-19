@@ -64,6 +64,15 @@ class Bovino extends Model
         return $this->estado === 'activo';
     }
 
+    public function identificacionBitacora(): string
+    {
+        if ($this->nombre_animal) {
+            return "{$this->numero_arete} ({$this->nombre_animal})";
+        }
+
+        return $this->numero_arete;
+    }
+
     public function marcarInactivo(string $motivo): void
     {
         $this->estado = 'inactivo';
