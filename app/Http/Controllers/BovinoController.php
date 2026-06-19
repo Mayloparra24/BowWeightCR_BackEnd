@@ -28,7 +28,7 @@ class BovinoController extends Controller
 
         if ($usuario->esAdministrador()) {
             $bovinos = Bovino::with($with)->get();
-        } elseif ($usuario->esVeterinario() || $usuario->esAsistente()) {
+        } elseif ($usuario->esVeterinario()) {
             $bovinos = Bovino::whereHas('finca.asignaciones', function ($query) use ($usuario) {
                 $query->where('usuario_id', $usuario->id)
                     ->where('esta_activa', true);
@@ -37,6 +37,13 @@ class BovinoController extends Controller
             $bovinos = Bovino::whereHas('finca', function ($query) use ($usuario) {
                 $query->where('propietario_id', $usuario->id);
             })->with($with)->get();
+
+            if ($usuario->esAsistente()) {
+                $asignados = Bovino::whereHas('finca.asignaciones', function ($query) use ($usuario) {
+                    $query->where('usuario_id', $usuario->id)->where('esta_activa', true);
+                })->with($with)->get();
+                $bovinos = $bovinos->merge($asignados)->unique('id');
+            }
         }
 
         return ApiResponse::resource(
