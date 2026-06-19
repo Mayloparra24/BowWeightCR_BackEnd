@@ -50,6 +50,13 @@ class PesajeController extends Controller
     {
         $bovino = Bovino::findOrFail($request->validated('bovino_id'));
 
+        if (! $bovino->estaActivo()) {
+            return ApiResponse::error(
+                message: 'No se puede registrar un pesaje en un bovino inactivo.',
+                status: 422,
+            );
+        }
+
         $this->authorize('create', [RegistroPesaje::class, $bovino]);
 
         $pesaje = RegistroPesaje::create([
@@ -89,6 +96,13 @@ class PesajeController extends Controller
     public function correct(CorrectPesajeRequest $request, int $id): JsonResponse
     {
         $pesaje = RegistroPesaje::with('bovino')->findOrFail($id);
+
+        if (! $pesaje->bovino->estaActivo()) {
+            return ApiResponse::error(
+                message: 'No se puede corregir un pesaje de un bovino inactivo.',
+                status: 422,
+            );
+        }
 
         $this->authorize('update', $pesaje);
 

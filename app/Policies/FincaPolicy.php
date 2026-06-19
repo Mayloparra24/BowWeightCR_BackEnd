@@ -22,9 +22,9 @@ class FincaPolicy
             return $finca->propietario_id === $usuario->id;
         }
 
-        if ($usuario->esVeterinario()) {
+        if ($usuario->esVeterinario() || $usuario->esAsistente()) {
             return $finca->asignaciones()
-                ->where('veterinario_id', $usuario->id)
+                ->where('usuario_id', $usuario->id)
                 ->where('esta_activa', true)
                 ->exists();
         }

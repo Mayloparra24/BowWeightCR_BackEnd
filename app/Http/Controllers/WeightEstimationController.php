@@ -30,6 +30,13 @@ class WeightEstimationController extends Controller
     {
         $bovino = Bovino::findOrFail($request->validated('bovino_id'));
 
+        if (! $bovino->estaActivo()) {
+            return ApiResponse::error(
+                message: 'No se puede estimar el peso de un bovino inactivo.',
+                status: 422,
+            );
+        }
+
         $this->authorize('create', [\App\Models\RegistroPesaje::class, $bovino]);
 
         $raza = Raza::findOrFail($request->validated('raza_id'));
